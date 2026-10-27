@@ -13,6 +13,9 @@
       Layout (4.75 cards, progress thumb, mobile dropdown): css/slider.css
       Settings: schema/product-slider.schema.json
     -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500&family=Source+Serif+Pro:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/tailwind.css">
     <link rel="stylesheet" href="css/slider.css">
   </head>
@@ -38,10 +41,10 @@
         data-show-more-label="Show more"
         data-show-less-label="Show less"
         aria-labelledby="best-sellers-heading"
-        style="--cards-visible: 4.75; --gap-count: 4; --gap: 16px; --row-gap: 20px; --card-radius: 1rem; --bestseller-bg: #1c1917; --bestseller-text: #fff; --save-bg: #fff; --save-text: #1c1917; --star: #1c1917; --star-empty: #d6d3d1; --progress: #1c1917; --progress-track: #e7e5e4;"
+        style="--cards-visible: 4.75; --gap-count: 4; --gap: 16px; --row-gap: 20px; --card-radius: 10px; --bestseller-bg: #1c1917; --bestseller-text: #fff; --save-bg: #fff; --save-text: #1c1917; --star: #1c1917; --star-empty: #d6d3d1; --progress: #1c1917; --progress-track: #e7e5e4;"
       >
         <div class="mb-6 flex items-baseline justify-between gap-4 md:mb-8">
-          <h2 id="best-sellers-heading" class="m-0 font-serif text-3xl font-medium tracking-tight md:text-[2.75rem] md:leading-none">
+          <h2 id="best-sellers-heading" class="m-0 font-heading text-[40px] font-black not-italic leading-[1.2] tracking-[-0.01em]">
             Best sellers
           </h2>
           <a
@@ -58,84 +61,84 @@
         <div id="best-sellers-track" class="track" data-slider-track>
           <article class="product-card group" data-slider-card>
             <a href="#stoneware-dinner-plate" class="block text-inherit no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-900">
-              <div class="relative aspect-[4/5] overflow-hidden rounded-[var(--card-radius,1rem)] bg-stone-200">
+              <div class="relative aspect-square w-full overflow-hidden rounded-[10px] bg-stone-200">
                 <img class="h-full w-full object-cover transition-opacity duration-500 ease-out group-hover:opacity-0 group-focus-within:opacity-0 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=900&h=1125&q=80" alt="Stoneware dinner plate" width="900" height="1125" draggable="false">
                 <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=900&h=1125&q=80" alt="" width="900" height="1125" draggable="false" aria-hidden="true">
                 <span class="badge pointer-events-none absolute left-2.5 top-2.5 z-10 inline-block max-w-[calc(50%-0.75rem)] truncate rounded-full bg-[var(--bestseller-bg,#1c1917)] px-2.5 py-1 text-[10px] font-semibold uppercase leading-none tracking-[0.06em] text-[var(--bestseller-text,#fff)]">Best seller</span>
               </div>
               <div class="mt-3 flex flex-col gap-1.5">
-                <h3 class="m-0 line-clamp-2 min-h-10 text-sm font-medium leading-5 tracking-tight">Stoneware dinner plate</h3>
-                <div class="flex flex-col gap-1 text-xs text-stone-500">
+                <h3 class="m-0 font-title text-[18px] font-normal uppercase leading-none tracking-[0.03em]">Stoneware dinner plate</h3>
+                <div class="flex flex-col gap-1 font-poppins text-[12px] font-normal leading-none tracking-normal text-[#707070]">
                   <p class="m-0 flex items-center gap-1.5">
                     <span class="stars" aria-hidden="true" style="--rating: 96%"><span class="stars__base" aria-hidden="true">★★★★★</span><span class="stars__fill" aria-hidden="true">★★★★★</span></span>
-                    <span class="font-medium text-stone-800">4.8</span>
+                    <span class="font-normal text-[#707070]">4.8</span>
                   </p>
                   <p class="m-0">126 reviews</p>
                 </div>
-                <p class="m-0 text-sm font-medium">$48</p>
+                <p class="m-0 font-poppins text-[16px] font-medium uppercase leading-none tracking-normal">$48</p>
               </div>
             </a>
           </article>
 
           <article class="product-card group" data-slider-card>
             <a href="#hand-thrown-serving-bowl" class="block text-inherit no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-900">
-              <div class="relative aspect-[4/5] overflow-hidden rounded-[var(--card-radius,1rem)] bg-stone-200">
+              <div class="relative aspect-square w-full overflow-hidden rounded-[10px] bg-stone-200">
                 <img class="h-full w-full object-cover transition-opacity duration-500 ease-out group-hover:opacity-0 group-focus-within:opacity-0 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=900&h=1125&q=80" alt="Hand-thrown serving bowl" width="900" height="1125" draggable="false">
                 <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&h=1125&q=80" alt="" width="900" height="1125" draggable="false" aria-hidden="true">
                 <span class="badge pointer-events-none absolute right-2.5 top-2.5 z-10 inline-block max-w-[calc(50%-0.75rem)] truncate rounded-full bg-[var(--save-bg,#fff)] px-2.5 py-1 text-[10px] font-semibold leading-none text-[var(--save-text,#1c1917)] shadow-sm ring-1 ring-inset ring-black/10">Save 20%</span>
               </div>
               <div class="mt-3 flex flex-col gap-1.5">
-                <h3 class="m-0 line-clamp-2 min-h-10 text-sm font-medium leading-5 tracking-tight">Hand-thrown serving bowl</h3>
-                <div class="flex flex-col gap-1 text-xs text-stone-500">
+                <h3 class="m-0 font-title text-[18px] font-normal uppercase leading-none tracking-[0.03em]">Hand-thrown serving bowl</h3>
+                <div class="flex flex-col gap-1 font-poppins text-[12px] font-normal leading-none tracking-normal text-[#707070]">
                   <p class="m-0 flex items-center gap-1.5">
                     <span class="stars" aria-hidden="true" style="--rating: 92%"><span class="stars__base" aria-hidden="true">★★★★★</span><span class="stars__fill" aria-hidden="true">★★★★★</span></span>
-                    <span class="font-medium text-stone-800">4.6</span>
+                    <span class="font-normal text-[#707070]">4.6</span>
                   </p>
                   <p class="m-0">84 reviews</p>
                 </div>
-                <p class="m-0 flex items-baseline gap-2 text-sm"><span class="font-medium">$64</span><s class="text-stone-400">$80</s></p>
+                <p class="m-0 flex items-baseline gap-2 font-poppins text-[16px] font-medium uppercase leading-none tracking-normal"><span>$64</span><s class="text-stone-400">$80</s></p>
               </div>
             </a>
           </article>
 
           <article class="product-card is-last-row group" data-slider-card>
             <a href="#linen-napkin-set" class="block text-inherit no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-900">
-              <div class="relative aspect-[4/5] overflow-hidden rounded-[var(--card-radius,1rem)] bg-stone-200">
+              <div class="relative aspect-square w-full overflow-hidden rounded-[10px] bg-stone-200">
                 <img class="h-full w-full object-cover transition-opacity duration-500 ease-out group-hover:opacity-0 group-focus-within:opacity-0 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=900&h=1125&q=80" alt="Linen napkin set" width="900" height="1125" draggable="false">
                 <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1493770348161-369560ae357d?auto=format&fit=crop&w=900&h=1125&q=80" alt="" width="900" height="1125" draggable="false" aria-hidden="true">
                 <span class="badge pointer-events-none absolute right-2.5 top-2.5 z-10 inline-block max-w-[calc(50%-0.75rem)] truncate rounded-full bg-[var(--save-bg,#fff)] px-2.5 py-1 text-[10px] font-semibold leading-none text-[var(--save-text,#1c1917)] shadow-sm ring-1 ring-inset ring-black/10">Save 15%</span>
               </div>
               <div class="mt-3 flex flex-col gap-1.5">
-                <h3 class="m-0 line-clamp-2 min-h-10 text-sm font-medium leading-5 tracking-tight">Linen napkin set</h3>
-                <div class="flex flex-col gap-1 text-xs text-stone-500">
+                <h3 class="m-0 font-title text-[18px] font-normal uppercase leading-none tracking-[0.03em]">Linen napkin set</h3>
+                <div class="flex flex-col gap-1 font-poppins text-[12px] font-normal leading-none tracking-normal text-[#707070]">
                   <p class="m-0 flex items-center gap-1.5">
                     <span class="stars" aria-hidden="true" style="--rating: 98%"><span class="stars__base" aria-hidden="true">★★★★★</span><span class="stars__fill" aria-hidden="true">★★★★★</span></span>
-                    <span class="font-medium text-stone-800">4.9</span>
+                    <span class="font-normal text-[#707070]">4.9</span>
                   </p>
                   <p class="m-0">203 reviews</p>
                 </div>
-                <p class="m-0 flex items-baseline gap-2 text-sm"><span class="font-medium">$34</span><s class="text-stone-400">$40</s></p>
+                <p class="m-0 flex items-baseline gap-2 font-poppins text-[16px] font-medium uppercase leading-none tracking-normal"><span>$34</span><s class="text-stone-400">$40</s></p>
               </div>
             </a>
           </article>
 
           <article class="product-card is-last-row group" data-slider-card>
             <a href="#brass-serving-spoon" class="block text-inherit no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-900">
-              <div class="relative aspect-[4/5] overflow-hidden rounded-[var(--card-radius,1rem)] bg-stone-200">
+              <div class="relative aspect-square w-full overflow-hidden rounded-[10px] bg-stone-200">
                 <img class="h-full w-full object-cover transition-opacity duration-500 ease-out group-hover:opacity-0 group-focus-within:opacity-0 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&h=1125&q=80" alt="Brass serving spoon" width="900" height="1125" draggable="false">
                 <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=900&h=1125&q=80" alt="" width="900" height="1125" draggable="false" aria-hidden="true">
                 <span class="badge pointer-events-none absolute left-2.5 top-2.5 z-10 inline-block max-w-[calc(50%-0.75rem)] truncate rounded-full bg-[var(--bestseller-bg,#1c1917)] px-2.5 py-1 text-[10px] font-semibold uppercase leading-none tracking-[0.06em] text-[var(--bestseller-text,#fff)]">Best seller</span>
               </div>
               <div class="mt-3 flex flex-col gap-1.5">
-                <h3 class="m-0 line-clamp-2 min-h-10 text-sm font-medium leading-5 tracking-tight">Brass serving spoon</h3>
-                <div class="flex flex-col gap-1 text-xs text-stone-500">
+                <h3 class="m-0 font-title text-[18px] font-normal uppercase leading-none tracking-[0.03em]">Brass serving spoon</h3>
+                <div class="flex flex-col gap-1 font-poppins text-[12px] font-normal leading-none tracking-normal text-[#707070]">
                   <p class="m-0 flex items-center gap-1.5">
                     <span class="stars" aria-hidden="true" style="--rating: 94%"><span class="stars__base" aria-hidden="true">★★★★★</span><span class="stars__fill" aria-hidden="true">★★★★★</span></span>
-                    <span class="font-medium text-stone-800">4.7</span>
+                    <span class="font-normal text-[#707070]">4.7</span>
                   </p>
                   <p class="m-0">57 reviews</p>
                 </div>
-                <p class="m-0 text-sm font-medium">$28</p>
+                <p class="m-0 font-poppins text-[16px] font-medium uppercase leading-none tracking-normal">$28</p>
               </div>
             </a>
           </article>
@@ -144,124 +147,124 @@
             <div class="more-inner" data-more-inner>
               <article class="product-card group" data-slider-card>
                 <a href="#olive-wood-board" class="block text-inherit no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-900">
-                  <div class="relative aspect-[4/5] overflow-hidden rounded-[var(--card-radius,1rem)] bg-stone-200">
+                  <div class="relative aspect-square w-full overflow-hidden rounded-[10px] bg-stone-200">
                     <img class="h-full w-full object-cover transition-opacity duration-500 ease-out group-hover:opacity-0 group-focus-within:opacity-0 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&w=900&h=1125&q=80" alt="Olive wood board" width="900" height="1125" loading="lazy" draggable="false">
                     <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=900&h=1125&q=80" alt="" width="900" height="1125" loading="lazy" draggable="false" aria-hidden="true">
                   </div>
                   <div class="mt-3 flex flex-col gap-1.5">
-                    <h3 class="m-0 line-clamp-2 min-h-10 text-sm font-medium leading-5 tracking-tight">Olive wood board</h3>
-                    <div class="flex flex-col gap-1 text-xs text-stone-500">
+                    <h3 class="m-0 font-title text-[18px] font-normal uppercase leading-none tracking-[0.03em]">Olive wood board</h3>
+                    <div class="flex flex-col gap-1 font-poppins text-[12px] font-normal leading-none tracking-normal text-[#707070]">
                       <p class="m-0 flex items-center gap-1.5">
                         <span class="stars" aria-hidden="true" style="--rating: 88%"><span class="stars__base" aria-hidden="true">★★★★★</span><span class="stars__fill" aria-hidden="true">★★★★★</span></span>
-                        <span class="font-medium text-stone-800">4.4</span>
+                        <span class="font-normal text-[#707070]">4.4</span>
                       </p>
                       <p class="m-0">39 reviews</p>
                     </div>
-                    <p class="m-0 text-sm font-medium">$72</p>
+                    <p class="m-0 font-poppins text-[16px] font-medium uppercase leading-none tracking-normal">$72</p>
                   </div>
                 </a>
               </article>
 
               <article class="product-card group" data-slider-card>
                 <a href="#ceramic-pourer" class="block text-inherit no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-900">
-                  <div class="relative aspect-[4/5] overflow-hidden rounded-[var(--card-radius,1rem)] bg-stone-200">
+                  <div class="relative aspect-square w-full overflow-hidden rounded-[10px] bg-stone-200">
                     <img class="h-full w-full object-cover transition-opacity duration-500 ease-out group-hover:opacity-0 group-focus-within:opacity-0 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=900&h=1125&q=80" alt="Ceramic pourer" width="900" height="1125" loading="lazy" draggable="false">
                     <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&h=1125&q=80" alt="" width="900" height="1125" loading="lazy" draggable="false" aria-hidden="true">
                     <span class="badge pointer-events-none absolute right-2.5 top-2.5 z-10 inline-block max-w-[calc(50%-0.75rem)] truncate rounded-full bg-[var(--save-bg,#fff)] px-2.5 py-1 text-[10px] font-semibold leading-none text-[var(--save-text,#1c1917)] shadow-sm ring-1 ring-inset ring-black/10">Save 25%</span>
                   </div>
                   <div class="mt-3 flex flex-col gap-1.5">
-                    <h3 class="m-0 line-clamp-2 min-h-10 text-sm font-medium leading-5 tracking-tight">Ceramic pourer</h3>
-                    <div class="flex flex-col gap-1 text-xs text-stone-500">
+                    <h3 class="m-0 font-title text-[18px] font-normal uppercase leading-none tracking-[0.03em]">Ceramic pourer</h3>
+                    <div class="flex flex-col gap-1 font-poppins text-[12px] font-normal leading-none tracking-normal text-[#707070]">
                       <p class="m-0 flex items-center gap-1.5">
                         <span class="stars" aria-hidden="true" style="--rating: 90%"><span class="stars__base" aria-hidden="true">★★★★★</span><span class="stars__fill" aria-hidden="true">★★★★★</span></span>
-                        <span class="font-medium text-stone-800">4.5</span>
+                        <span class="font-normal text-[#707070]">4.5</span>
                       </p>
                       <p class="m-0">61 reviews</p>
                     </div>
-                    <p class="m-0 flex items-baseline gap-2 text-sm"><span class="font-medium">$36</span><s class="text-stone-400">$48</s></p>
+                    <p class="m-0 flex items-baseline gap-2 font-poppins text-[16px] font-medium uppercase leading-none tracking-normal"><span>$36</span><s class="text-stone-400">$48</s></p>
                   </div>
                 </a>
               </article>
 
               <article class="product-card group" data-slider-card>
                 <a href="#glass-tumbler-set" class="block text-inherit no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-900">
-                  <div class="relative aspect-[4/5] overflow-hidden rounded-[var(--card-radius,1rem)] bg-stone-200">
+                  <div class="relative aspect-square w-full overflow-hidden rounded-[10px] bg-stone-200">
                     <img class="h-full w-full object-cover transition-opacity duration-500 ease-out group-hover:opacity-0 group-focus-within:opacity-0 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&h=1125&q=80" alt="Glass tumbler set" width="900" height="1125" loading="lazy" draggable="false">
                     <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=900&h=1125&q=80" alt="" width="900" height="1125" loading="lazy" draggable="false" aria-hidden="true">
                   </div>
                   <div class="mt-3 flex flex-col gap-1.5">
-                    <h3 class="m-0 line-clamp-2 min-h-10 text-sm font-medium leading-5 tracking-tight">Glass tumbler set</h3>
-                    <div class="flex flex-col gap-1 text-xs text-stone-500">
+                    <h3 class="m-0 font-title text-[18px] font-normal uppercase leading-none tracking-[0.03em]">Glass tumbler set</h3>
+                    <div class="flex flex-col gap-1 font-poppins text-[12px] font-normal leading-none tracking-normal text-[#707070]">
                       <p class="m-0 flex items-center gap-1.5">
                         <span class="stars" aria-hidden="true" style="--rating: 96%"><span class="stars__base" aria-hidden="true">★★★★★</span><span class="stars__fill" aria-hidden="true">★★★★★</span></span>
-                        <span class="font-medium text-stone-800">4.8</span>
+                        <span class="font-normal text-[#707070]">4.8</span>
                       </p>
                       <p class="m-0">98 reviews</p>
                     </div>
-                    <p class="m-0 text-sm font-medium">$42</p>
+                    <p class="m-0 font-poppins text-[16px] font-medium uppercase leading-none tracking-normal">$42</p>
                   </div>
                 </a>
               </article>
 
               <article class="product-card group" data-slider-card>
                 <a href="#marble-salt-cellar" class="block text-inherit no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-900">
-                  <div class="relative aspect-[4/5] overflow-hidden rounded-[var(--card-radius,1rem)] bg-stone-200">
+                  <div class="relative aspect-square w-full overflow-hidden rounded-[10px] bg-stone-200">
                     <img class="h-full w-full object-cover transition-opacity duration-500 ease-out group-hover:opacity-0 group-focus-within:opacity-0 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=900&h=1125&q=80" alt="Marble salt cellar" width="900" height="1125" loading="lazy" draggable="false">
                     <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=900&h=1125&q=80" alt="" width="900" height="1125" loading="lazy" draggable="false" aria-hidden="true">
                     <span class="badge pointer-events-none absolute left-2.5 top-2.5 z-10 inline-block max-w-[calc(50%-0.75rem)] truncate rounded-full bg-[var(--bestseller-bg,#1c1917)] px-2.5 py-1 text-[10px] font-semibold uppercase leading-none tracking-[0.06em] text-[var(--bestseller-text,#fff)]">Best seller</span>
                     <span class="badge pointer-events-none absolute right-2.5 top-2.5 z-10 inline-block max-w-[calc(50%-0.75rem)] truncate rounded-full bg-[var(--save-bg,#fff)] px-2.5 py-1 text-[10px] font-semibold leading-none text-[var(--save-text,#1c1917)] shadow-sm ring-1 ring-inset ring-black/10">Save 27%</span>
                   </div>
                   <div class="mt-3 flex flex-col gap-1.5">
-                    <h3 class="m-0 line-clamp-2 min-h-10 text-sm font-medium leading-5 tracking-tight">Marble salt cellar</h3>
-                    <div class="flex flex-col gap-1 text-xs text-stone-500">
+                    <h3 class="m-0 font-title text-[18px] font-normal uppercase leading-none tracking-[0.03em]">Marble salt cellar</h3>
+                    <div class="flex flex-col gap-1 font-poppins text-[12px] font-normal leading-none tracking-normal text-[#707070]">
                       <p class="m-0 flex items-center gap-1.5">
                         <span class="stars" aria-hidden="true" style="--rating: 100%"><span class="stars__base" aria-hidden="true">★★★★★</span><span class="stars__fill" aria-hidden="true">★★★★★</span></span>
-                        <span class="font-medium text-stone-800">5.0</span>
+                        <span class="font-normal text-[#707070]">5.0</span>
                       </p>
                       <p class="m-0">44 reviews</p>
                     </div>
-                    <p class="m-0 flex items-baseline gap-2 text-sm"><span class="font-medium">$22</span><s class="text-stone-400">$30</s></p>
+                    <p class="m-0 flex items-baseline gap-2 font-poppins text-[16px] font-medium uppercase leading-none tracking-normal"><span>$22</span><s class="text-stone-400">$30</s></p>
                   </div>
                 </a>
               </article>
 
               <article class="product-card group" data-slider-card>
                 <a href="#cotton-table-runner" class="block text-inherit no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-900">
-                  <div class="relative aspect-[4/5] overflow-hidden rounded-[var(--card-radius,1rem)] bg-stone-200">
+                  <div class="relative aspect-square w-full overflow-hidden rounded-[10px] bg-stone-200">
                     <img class="h-full w-full object-cover transition-opacity duration-500 ease-out group-hover:opacity-0 group-focus-within:opacity-0 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&h=1125&q=80" alt="Cotton table runner" width="900" height="1125" loading="lazy" draggable="false">
                     <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&h=1125&q=80" alt="" width="900" height="1125" loading="lazy" draggable="false" aria-hidden="true">
                     <span class="badge pointer-events-none absolute right-2.5 top-2.5 z-10 inline-block max-w-[calc(50%-0.75rem)] truncate rounded-full bg-[var(--save-bg,#fff)] px-2.5 py-1 text-[10px] font-semibold leading-none text-[var(--save-text,#1c1917)] shadow-sm ring-1 ring-inset ring-black/10">Save 10%</span>
                   </div>
                   <div class="mt-3 flex flex-col gap-1.5">
-                    <h3 class="m-0 line-clamp-2 min-h-10 text-sm font-medium leading-5 tracking-tight">Cotton table runner</h3>
-                    <div class="flex flex-col gap-1 text-xs text-stone-500">
+                    <h3 class="m-0 font-title text-[18px] font-normal uppercase leading-none tracking-[0.03em]">Cotton table runner</h3>
+                    <div class="flex flex-col gap-1 font-poppins text-[12px] font-normal leading-none tracking-normal text-[#707070]">
                       <p class="m-0 flex items-center gap-1.5">
                         <span class="stars" aria-hidden="true" style="--rating: 86%"><span class="stars__base" aria-hidden="true">★★★★★</span><span class="stars__fill" aria-hidden="true">★★★★★</span></span>
-                        <span class="font-medium text-stone-800">4.3</span>
+                        <span class="font-normal text-[#707070]">4.3</span>
                       </p>
                       <p class="m-0">27 reviews</p>
                     </div>
-                    <p class="m-0 flex items-baseline gap-2 text-sm"><span class="font-medium">$54</span><s class="text-stone-400">$60</s></p>
+                    <p class="m-0 flex items-baseline gap-2 font-poppins text-[16px] font-medium uppercase leading-none tracking-normal"><span>$54</span><s class="text-stone-400">$60</s></p>
                   </div>
                 </a>
               </article>
 
               <article class="product-card group" data-slider-card>
                 <a href="#espresso-cup-set" class="block text-inherit no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-900">
-                  <div class="relative aspect-[4/5] overflow-hidden rounded-[var(--card-radius,1rem)] bg-stone-200">
+                  <div class="relative aspect-square w-full overflow-hidden rounded-[10px] bg-stone-200">
                     <img class="h-full w-full object-cover transition-opacity duration-500 ease-out group-hover:opacity-0 group-focus-within:opacity-0 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=900&h=1125&q=80" alt="Espresso cup set" width="900" height="1125" loading="lazy" draggable="false">
                     <img class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none" src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&h=1125&q=80" alt="" width="900" height="1125" loading="lazy" draggable="false" aria-hidden="true">
                   </div>
                   <div class="mt-3 flex flex-col gap-1.5">
-                    <h3 class="m-0 line-clamp-2 min-h-10 text-sm font-medium leading-5 tracking-tight">Espresso cup set</h3>
-                    <div class="flex flex-col gap-1 text-xs text-stone-500">
+                    <h3 class="m-0 font-title text-[18px] font-normal uppercase leading-none tracking-[0.03em]">Espresso cup set</h3>
+                    <div class="flex flex-col gap-1 font-poppins text-[12px] font-normal leading-none tracking-normal text-[#707070]">
                       <p class="m-0 flex items-center gap-1.5">
                         <span class="stars" aria-hidden="true" style="--rating: 94%"><span class="stars__base" aria-hidden="true">★★★★★</span><span class="stars__fill" aria-hidden="true">★★★★★</span></span>
-                        <span class="font-medium text-stone-800">4.7</span>
+                        <span class="font-normal text-[#707070]">4.7</span>
                       </p>
                       <p class="m-0">73 reviews</p>
                     </div>
-                    <p class="m-0 text-sm font-medium">$38</p>
+                    <p class="m-0 font-poppins text-[16px] font-medium uppercase leading-none tracking-normal">$38</p>
                   </div>
                 </a>
               </article>

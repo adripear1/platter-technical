@@ -24,7 +24,7 @@ product-slider {
   --gap-count: 4;
   --gap: 16px;
   --row-gap: 20px;
-  --card-radius: 1rem;
+  --card-radius: 10px;
   --star: #1c1917;
   --star-empty: #d6d3d1;
   --progress: #1c1917;
@@ -66,8 +66,8 @@ product-slider .track::-webkit-scrollbar {
  * The peek is a fifth card, so four gaps sit in the frame: ceil(4.75) - 1 = 4.
  */
 product-slider .product-card {
-  flex: 0 0 calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible));
-  width: calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible));
+  flex: 0 0 min(355px, calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible)));
+  width: min(355px, calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible)));
   scroll-snap-align: start;
 }
 
@@ -251,10 +251,10 @@ product-slider .show-more[aria-expanded="true"] svg {
 
 product-slider.ps-frame {
   display: block;
-  width: min(1200px, calc(100% - 32px));
+  width: min(1814px, calc(100% - 32px));
   margin-inline: auto;
   color: var(--ps-text, inherit);
-  font-family: var(--font-body--family, "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif);
+  font-family: Poppins, var(--font-body--family, "Segoe UI", sans-serif);
 }
 
 product-slider.ps-frame--full {
@@ -264,7 +264,7 @@ product-slider.ps-frame--full {
 @media (min-width: 768px) {
   product-slider.ps-frame,
   product-slider.ps-frame--full {
-    width: min(1200px, calc(100% - 64px));
+    width: min(1814px, calc(100% - 64px));
   }
 
   product-slider.ps-frame--full {
@@ -289,22 +289,17 @@ product-slider .ps-header {
 product-slider .ps-heading {
   margin: 0;
   min-width: 0;
-  font-family: var(--font-heading--family, "Iowan Old Style", Palatino, Georgia, serif);
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1.1;
+  font-family: "Source Serif Pro", Georgia, serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
-product-slider .ps-heading--small { font-size: 1.5rem; }
-product-slider .ps-heading--medium { font-size: 2rem; }
-product-slider .ps-heading--large { font-size: 1.875rem; line-height: 2.25rem; }
-
-@media (min-width: 768px) {
-  product-slider .ps-heading--large {
-    font-size: 2.75rem;
-    line-height: 1;
-  }
-}
+product-slider .ps-heading--small { font-size: 28px; }
+product-slider .ps-heading--medium { font-size: 34px; }
+product-slider .ps-heading--large { font-size: 40px; }
 
 product-slider .ps-shop {
   display: inline-flex;
@@ -342,13 +337,15 @@ product-slider .card-link:focus-visible {
 
 product-slider .card-media {
   position: relative;
+  width: 100%;
   overflow: hidden;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--card-radius, 1rem);
+  aspect-ratio: 1;
+  border-radius: 10px;
   background: var(--ps-image, #e7e5e4);
 }
 
 product-slider .card-media--square { aspect-ratio: 1; }
+product-slider .card-media--portrait { aspect-ratio: 4 / 5; }
 product-slider .card-media--landscape { aspect-ratio: 5 / 4; }
 
 product-slider .card-media img,
@@ -415,24 +412,28 @@ product-slider .card-body {
 }
 
 product-slider .card-title {
-  display: -webkit-box;
   margin: 0;
-  min-height: 2.5rem;
   overflow: hidden;
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1.25rem;
-  letter-spacing: -0.025em;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
 product-slider .rating {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  color: var(--ps-muted, #78716c);
-  font-size: 0.75rem;
+  color: #707070;
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0;
 }
 
 product-slider .rating__row {
@@ -443,8 +444,8 @@ product-slider .rating__row {
 }
 
 product-slider .rating__value {
-  color: var(--ps-text, inherit);
-  font-weight: 500;
+  color: #707070;
+  font-weight: 400;
 }
 
 product-slider .rating__count,
@@ -456,7 +457,14 @@ product-slider .price {
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
-  font-size: 0.875rem;
+  margin: 0;
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }
 
 product-slider .price__current { font-weight: 500; }

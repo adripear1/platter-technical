@@ -4,11 +4,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Avenir Next", "Segoe UI", "Helvetica Neue", "sans-serif"],
-        serif: ["Iowan Old Style", "Palatino Linotype", "Palatino", "Georgia", "serif"],
+        sans: ["Poppins", "Avenir Next", "Segoe UI", "sans-serif"],
+        heading: ['"Source Serif Pro"', "Georgia", "serif"],
+        title: ['"Bebas Neue"', "Impact", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
       },
       maxWidth: {
-        page: "1200px",
+        page: "1814px",
       },
     },
   },

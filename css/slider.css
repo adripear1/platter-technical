@@ -13,7 +13,7 @@ product-slider {
   --gap-count: 4;
   --gap: 16px;
   --row-gap: 20px;
-  --card-radius: 1rem;
+  --card-radius: 10px;
   --star: #1c1917;
   --star-empty: #d6d3d1;
   --progress: #1c1917;
@@ -55,8 +55,8 @@ product-slider .track::-webkit-scrollbar {
  * The peek is a fifth card, so four gaps sit in the frame: ceil(4.75) - 1 = 4.
  */
 product-slider .product-card {
-  flex: 0 0 calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible));
-  width: calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible));
+  flex: 0 0 min(355px, calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible)));
+  width: min(355px, calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible)));
   scroll-snap-align: start;
 }
 

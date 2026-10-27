@@ -154,7 +154,7 @@ html,
   -o-tab-size: 4;
      tab-size: 4;
   /* 3 */
-  font-family: Avenir Next, Segoe UI, Helvetica Neue, sans-serif;
+  font-family: Poppins, Avenir Next, Segoe UI, sans-serif;
   /* 4 */
   font-feature-settings: normal;
   /* 5 */
@@ -619,13 +619,6 @@ video {
   margin-top: 2rem;
 }
 
-.line-clamp-2 {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
 .block {
   display: block;
 }
@@ -646,8 +639,8 @@ video {
   display: table;
 }
 
-.aspect-\[4\/5\] {
-  aspect-ratio: 4/5;
+.aspect-square {
+  aspect-ratio: 1 / 1;
 }
 
 .h-14 {
@@ -660,10 +653,6 @@ video {
 
 .h-full {
   height: 100%;
-}
-
-.min-h-10 {
-  min-height: 2.5rem;
 }
 
 .min-h-screen {
@@ -687,7 +676,7 @@ video {
 }
 
 .max-w-page {
-  max-width: 1200px;
+  max-width: 1814px;
 }
 
 .shrink-0 {
@@ -744,8 +733,8 @@ video {
   white-space: nowrap;
 }
 
-.rounded-\[var\(--card-radius\2c 1rem\)\] {
-  border-radius: var(--card-radius,1rem);
+.rounded-\[10px\] {
+  border-radius: 10px;
 }
 
 .rounded-full {
@@ -823,21 +812,40 @@ video {
   padding-bottom: 0.75rem;
 }
 
+.font-heading {
+  font-family: "Source Serif Pro", Georgia, serif;
+}
+
+.font-poppins {
+  font-family: Poppins, sans-serif;
+}
+
 .font-sans {
-  font-family: Avenir Next, Segoe UI, Helvetica Neue, sans-serif;
+  font-family: Poppins, Avenir Next, Segoe UI, sans-serif;
 }
 
-.font-serif {
-  font-family: Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif;
-}
-
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+.font-title {
+  font-family: "Bebas Neue", Impact, sans-serif;
 }
 
 .text-\[10px\] {
   font-size: 10px;
+}
+
+.text-\[12px\] {
+  font-size: 12px;
+}
+
+.text-\[16px\] {
+  font-size: 16px;
+}
+
+.text-\[18px\] {
+  font-size: 18px;
+}
+
+.text-\[40px\] {
+  font-size: 40px;
 }
 
 .text-sm {
@@ -845,13 +853,16 @@ video {
   line-height: 1.25rem;
 }
 
-.text-xs {
-  font-size: 0.75rem;
-  line-height: 1rem;
+.font-black {
+  font-weight: 900;
 }
 
 .font-medium {
   font-weight: 500;
+}
+
+.font-normal {
+  font-weight: 400;
 }
 
 .font-semibold {
@@ -862,12 +873,24 @@ video {
   text-transform: uppercase;
 }
 
-.leading-5 {
-  line-height: 1.25rem;
+.not-italic {
+  font-style: normal;
+}
+
+.leading-\[1\.2\] {
+  line-height: 1.2;
 }
 
 .leading-none {
   line-height: 1;
+}
+
+.tracking-\[-0\.01em\] {
+  letter-spacing: -0.01em;
+}
+
+.tracking-\[0\.03em\] {
+  letter-spacing: 0.03em;
 }
 
 .tracking-\[0\.06em\] {
@@ -878,8 +901,13 @@ video {
   letter-spacing: 0.22em;
 }
 
-.tracking-tight {
-  letter-spacing: -0.025em;
+.tracking-normal {
+  letter-spacing: 0em;
+}
+
+.text-\[\#707070\] {
+  --tw-text-opacity: 1;
+  color: rgb(112 112 112 / var(--tw-text-opacity, 1));
 }
 
 .text-\[var\(--bestseller-text\2c \#fff\)\] {
@@ -902,11 +930,6 @@ video {
 .text-stone-500 {
   --tw-text-opacity: 1;
   color: rgb(120 113 108 / var(--tw-text-opacity, 1));
-}
-
-.text-stone-800 {
-  --tw-text-opacity: 1;
-  color: rgb(41 37 36 / var(--tw-text-opacity, 1));
 }
 
 .text-stone-900 {
@@ -1101,13 +1124,5 @@ video {
   .md\:py-16 {
     padding-top: 4rem;
     padding-bottom: 4rem;
-  }
-
-  .md\:text-\[2\.75rem\] {
-    font-size: 2.75rem;
-  }
-
-  .md\:leading-none {
-    line-height: 1;
   }
 }

@@ -7,6 +7,7 @@
 {%- endcomment -%}
 
 {{ 'product-slider.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500&family=Source+Serif+Pro:wght@900&display=swap">
 <script src="{{ 'product-slider.js' | asset_url }}" defer></script>
 
 {%- liquid
@@ -88,7 +89,7 @@
     --gap-count: {{ gap_count }};
     --gap: {{ section.settings.gap | default: 16 }}px;
     --row-gap: 20px;
-    --card-radius: {{ section.settings.card_radius | default: 16 }}px;
+    --card-radius: {{ section.settings.card_radius | default: 10 }}px;
     --ps-text: {{ section.settings.text_color | default: 'inherit' }};
     --ps-muted: {{ section.settings.muted_color | default: '#78716c' }};
     --ps-image: {{ section.settings.image_background | default: '#e7e5e4' }};
@@ -435,7 +436,7 @@
           "label": "Landscape"
         }
       ],
-      "default": "portrait"
+      "default": "square"
     },
     {
       "type": "range",
@@ -445,7 +446,7 @@
       "max": 32,
       "step": 2,
       "unit": "px",
-      "default": 16
+      "default": 10
     },
     {
       "type": "select",
@@ -585,8 +586,8 @@
         "discount_format": "percent",
         "cards_visible": "4.75",
         "gap": 16,
-        "image_ratio": "portrait",
-        "card_radius": 16,
+        "image_ratio": "square",
+        "card_radius": 10,
         "section_width": "page",
         "show_progress": true,
         "show_more_label": "Show more",
