@@ -1,0 +1,239 @@
+/*
+ * Layout the utility classes do not express cleanly:
+ * a 4.75-card desktop row, the progress thumb, and the mobile dropdown.
+ * Scoped to <product-slider> so the section does not restyle the rest of the page.
+ */
+
+product-slider {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
+  --cards-visible: 4.75;
+  --gap-count: 4;
+  --gap: 16px;
+  --row-gap: 20px;
+  --card-radius: 1rem;
+  --star: #1c1917;
+  --star-empty: #d6d3d1;
+  --progress: #1c1917;
+  --progress-track: #e7e5e4;
+}
+
+product-slider .track,
+product-slider .more,
+product-slider .more-inner,
+product-slider .product-card {
+  min-width: 0;
+  max-width: 100%;
+}
+
+product-slider .track {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  touch-action: pan-x pan-y;
+  cursor: grab;
+  list-style: none;
+}
+
+product-slider .track::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+ * Four full cards and three quarters of the next one.
+ * The peek is a fifth card, so four gaps sit in the frame: ceil(4.75) - 1 = 4.
+ */
+product-slider .product-card {
+  flex: 0 0 calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible));
+  width: calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible));
+  scroll-snap-align: start;
+}
+
+product-slider .product-card img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* On desktop the cards after the fourth join the same scrolling row. */
+product-slider .more,
+product-slider .more-inner {
+  display: contents;
+}
+
+product-slider.is-dragging .track {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+
+product-slider.is-dragging {
+  user-select: none;
+}
+
+product-slider .stars {
+  position: relative;
+  display: inline-block;
+  height: 14px;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--star-empty);
+  white-space: nowrap;
+}
+
+product-slider .stars__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--rating, 0%);
+  overflow: hidden;
+  color: var(--star);
+  white-space: nowrap;
+}
+
+/*
+ * Custom scrollbar under the cards.
+ * The track line stays 3px. The thumb grows from 3px to 6px on hover,
+ * keyboard focus, and touch.
+ */
+product-slider .progress {
+  margin-top: 22px;
+  padding-block: 10px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+product-slider .progress__track {
+  position: relative;
+  height: 6px;
+}
+
+product-slider .progress__track::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: 3px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: var(--progress-track);
+}
+
+product-slider .progress__thumb {
+  position: absolute;
+  top: 50%;
+  height: 3px;
+  inset-inline-start: 0;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: var(--progress);
+  transition: height 180ms ease;
+}
+
+product-slider .progress:hover .progress__thumb,
+product-slider .progress:active .progress__thumb,
+product-slider .progress.is-touching .progress__thumb,
+product-slider .progress:focus-visible .progress__thumb {
+  height: 6px;
+}
+
+product-slider .progress:focus-visible {
+  outline: 2px solid var(--progress);
+  outline-offset: 4px;
+}
+
+product-slider .show-more svg {
+  transition: transform 300ms ease;
+}
+
+product-slider .show-more[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+@media (min-width: 768px) {
+  product-slider .show-more {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  product-slider .track {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
+    row-gap: 0;
+    overflow: visible;
+    cursor: auto;
+    touch-action: auto;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+
+  product-slider .product-card {
+    width: auto;
+    flex: none;
+    margin-bottom: var(--row-gap);
+  }
+
+  product-slider .product-card.is-last-row {
+    margin-bottom: 0;
+  }
+
+  product-slider .badge {
+    max-width: calc(50% - 8px);
+    padding-left: 0.45rem;
+    padding-right: 0.45rem;
+    font-size: 9px;
+    letter-spacing: 0.03em;
+  }
+
+  product-slider .more {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-rows: 0fr;
+    min-height: 0;
+    overflow: hidden;
+    margin-top: 0;
+    transition: grid-template-rows 500ms ease, margin-top 500ms ease;
+  }
+
+  product-slider .more.is-open {
+    grid-template-rows: 1fr;
+    margin-top: var(--row-gap);
+  }
+
+  product-slider .more-inner {
+    display: grid;
+    min-height: 0;
+    overflow: hidden;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--row-gap) 12px;
+  }
+
+  product-slider .progress {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  product-slider .track {
+    scroll-behavior: auto;
+  }
+
+  product-slider .more,
+  product-slider .progress__thumb,
+  product-slider .show-more svg,
+  product-slider .product-card img {
+    transition: none;
+  }
+}
