@@ -615,12 +615,12 @@ video {
   display: flex;
 }
 
-.inline-flex {
-  display: inline-flex;
-}
-
 .table {
   display: table;
+}
+
+.hidden {
+  display: none;
 }
 
 .aspect-square {
@@ -783,6 +783,10 @@ video {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .font-heading {
@@ -1069,6 +1073,22 @@ video {
     margin-bottom: 2rem;
   }
 
+  .md\:inline-flex {
+    display: inline-flex;
+  }
+
+  .md\:w-auto {
+    width: auto;
+  }
+
+  .md\:items-baseline {
+    align-items: baseline;
+  }
+
+  .md\:justify-between {
+    justify-content: space-between;
+  }
+
   .md\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
@@ -1077,5 +1097,9 @@ video {
   .md\:py-16 {
     padding-top: 4rem;
     padding-bottom: 4rem;
+  }
+
+  .md\:text-left {
+    text-align: left;
   }
 }

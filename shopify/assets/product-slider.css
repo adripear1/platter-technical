@@ -334,6 +334,21 @@ product-slider .ps-shop:hover {
   text-decoration-color: #5c553a;
 }
 
+@media (max-width: 767px) {
+  product-slider .ps-header {
+    justify-content: center;
+  }
+
+  product-slider .ps-heading {
+    width: 100%;
+    text-align: center;
+  }
+
+  product-slider .ps-shop {
+    display: none;
+  }
+}
+
 product-slider .ps-shop svg {
   display: block;
   width: 16px;
