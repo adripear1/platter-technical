@@ -1,0 +1,11 @@
+{
+  "name": "platter-product-slider",
+  "private": true,
+  "description": "Product slider section. The committed CSS is what the preview uses; the build script only regenerates it.",
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i src/tailwind.css -o css/tailwind.css"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}
