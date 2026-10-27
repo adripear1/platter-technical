@@ -345,7 +345,7 @@ product-slider .ps-shop {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   margin-left: auto;
   color: #5c553a;
   font-size: 0.875rem;
