@@ -582,22 +582,6 @@ video {
   inset: 0px;
 }
 
-.left-2\.5 {
-  left: 0.625rem;
-}
-
-.right-2\.5 {
-  right: 0.625rem;
-}
-
-.top-2\.5 {
-  top: 0.625rem;
-}
-
-.z-10 {
-  z-index: 10;
-}
-
 .m-0 {
   margin: 0px;
 }
@@ -611,6 +595,10 @@ video {
   margin-bottom: 1.5rem;
 }
 
+.ml-auto {
+  margin-left: auto;
+}
+
 .mt-3 {
   margin-top: 0.75rem;
 }
@@ -621,10 +609,6 @@ video {
 
 .block {
   display: block;
-}
-
-.inline-block {
-  display: inline-block;
 }
 
 .flex {
@@ -645,6 +629,10 @@ video {
 
 .h-14 {
   height: 3.5rem;
+}
+
+.h-3 {
+  height: 0.75rem;
 }
 
 .h-4 {
@@ -671,10 +659,6 @@ video {
   max-width: 220px;
 }
 
-.max-w-\[calc\(50\%-0\.75rem\)\] {
-  max-width: calc(50% - 0.75rem);
-}
-
 .max-w-page {
   max-width: 1814px;
 }
@@ -685,6 +669,10 @@ video {
 
 .flex-col {
   flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .items-center {
@@ -715,8 +703,13 @@ video {
   gap: 0.5rem;
 }
 
-.gap-4 {
-  gap: 1rem;
+.gap-x-4 {
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
+}
+
+.gap-y-2 {
+  row-gap: 0.5rem;
 }
 
 .overflow-hidden {
@@ -727,9 +720,7 @@ video {
   overflow-x: hidden;
 }
 
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
+.whitespace-nowrap {
   white-space: nowrap;
 }
 
@@ -764,14 +755,6 @@ video {
   background-color: rgb(246 244 241 / var(--tw-bg-opacity, 1));
 }
 
-.bg-\[var\(--bestseller-bg\2c \#1c1917\)\] {
-  background-color: var(--bestseller-bg,#1c1917);
-}
-
-.bg-\[var\(--save-bg\2c \#fff\)\] {
-  background-color: var(--save-bg,#fff);
-}
-
 .bg-stone-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(231 229 228 / var(--tw-bg-opacity, 1));
@@ -782,11 +765,6 @@ video {
      object-fit: cover;
 }
 
-.px-2\.5 {
-  padding-left: 0.625rem;
-  padding-right: 0.625rem;
-}
-
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -795,11 +773,6 @@ video {
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
-}
-
-.py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
 }
 
 .py-10 {
@@ -826,10 +799,6 @@ video {
 
 .font-title {
   font-family: "Bebas Neue", Impact, sans-serif;
-}
-
-.text-\[10px\] {
-  font-size: 10px;
 }
 
 .text-\[12px\] {
@@ -865,10 +834,6 @@ video {
   font-weight: 400;
 }
 
-.font-semibold {
-  font-weight: 600;
-}
-
 .uppercase {
   text-transform: uppercase;
 }
@@ -893,10 +858,6 @@ video {
   letter-spacing: 0.03em;
 }
 
-.tracking-\[0\.06em\] {
-  letter-spacing: 0.06em;
-}
-
 .tracking-\[0\.22em\] {
   letter-spacing: 0.22em;
 }
@@ -905,17 +866,24 @@ video {
   letter-spacing: 0em;
 }
 
+.text-\[\#1C1D1D\] {
+  --tw-text-opacity: 1;
+  color: rgb(28 29 29 / var(--tw-text-opacity, 1));
+}
+
+.text-\[\#231F20\] {
+  --tw-text-opacity: 1;
+  color: rgb(35 31 32 / var(--tw-text-opacity, 1));
+}
+
+.text-\[\#5C553A\] {
+  --tw-text-opacity: 1;
+  color: rgb(92 85 58 / var(--tw-text-opacity, 1));
+}
+
 .text-\[\#707070\] {
   --tw-text-opacity: 1;
   color: rgb(112 112 112 / var(--tw-text-opacity, 1));
-}
-
-.text-\[var\(--bestseller-text\2c \#fff\)\] {
-  color: var(--bestseller-text,#fff);
-}
-
-.text-\[var\(--save-text\2c \#1c1917\)\] {
-  color: var(--save-text,#1c1917);
 }
 
 .text-inherit {
@@ -945,8 +913,8 @@ video {
   text-decoration-line: none;
 }
 
-.decoration-stone-300 {
-  text-decoration-color: #d6d3d1;
+.decoration-\[\#5C553A\] {
+  text-decoration-color: #5C553A;
 }
 
 .underline-offset-4 {
@@ -960,26 +928,6 @@ video {
 
 .opacity-0 {
   opacity: 0;
-}
-
-.shadow-sm {
-  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.ring-1 {
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
-
-.ring-inset {
-  --tw-ring-inset: inset;
-}
-
-.ring-black\/10 {
-  --tw-ring-color: rgb(0 0 0 / 0.1);
 }
 
 .transition-colors {
@@ -1010,10 +958,6 @@ video {
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-
-.hover\:decoration-stone-900:hover {
-  text-decoration-color: #1c1917;
 }
 
 .focus\:not-sr-only:focus {
@@ -1083,6 +1027,10 @@ video {
 
 .focus-visible\:outline-offset-4:focus-visible {
   outline-offset: 4px;
+}
+
+.focus-visible\:outline-\[\#5C553A\]:focus-visible {
+  outline-color: #5C553A;
 }
 
 .focus-visible\:outline-stone-900:focus-visible {

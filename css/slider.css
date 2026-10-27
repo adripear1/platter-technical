@@ -36,6 +36,7 @@ product-slider .track {
   margin: 0;
   padding: 0;
   overflow-x: auto;
+  overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scroll-behavior: auto;
@@ -57,12 +58,66 @@ product-slider .track::-webkit-scrollbar {
 product-slider .product-card {
   flex: 0 0 min(355px, calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible)));
   width: min(355px, calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible)));
+  overflow: hidden;
   scroll-snap-align: start;
+}
+
+product-slider .product-card:focus-within {
+  outline: 2px solid var(--progress, #1c1917);
+  outline-offset: 4px;
 }
 
 product-slider .product-card img {
   -webkit-user-drag: none;
   user-select: none;
+}
+
+/*
+ * Badges sit on the image. The discount badge's left edge is 277px
+ * on a 355px image, which is 27px in from the right.
+ */
+product-slider .badge {
+  position: absolute;
+  top: 8px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 20px;
+  gap: 10px;
+  margin: 0;
+  padding: 4px 8px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 100px;
+  opacity: 1;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+product-slider .badge--best {
+  left: 8px;
+  width: 61px;
+  background: var(--bestseller-bg, #ffffff);
+  color: var(--bestseller-text, #000000);
+  border-color: #000000;
+}
+
+product-slider .badge--save {
+  right: 27px;
+  width: 51px;
+  background: var(--save-bg, #5c7962);
+  color: var(--save-text, #fffffa);
+  border-color: #5c7962;
 }
 
 /* On desktop the cards after the fourth join the same scrolling row. */
@@ -187,14 +242,6 @@ product-slider .show-more[aria-expanded="true"] svg {
 
   product-slider .product-card.is-last-row {
     margin-bottom: 0;
-  }
-
-  product-slider .badge {
-    max-width: calc(50% - 8px);
-    padding-left: 0.45rem;
-    padding-right: 0.45rem;
-    font-size: 9px;
-    letter-spacing: 0.03em;
   }
 
   product-slider .more {

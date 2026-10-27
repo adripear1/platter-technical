@@ -38,7 +38,7 @@
       "type": "text",
       "id": "shop_all_label",
       "label": "Shop all label",
-      "default": "Shop all"
+      "default": "Shop All Best Sellers"
     },
     {
       "type": "url",
@@ -263,25 +263,25 @@
       "type": "color",
       "id": "bestseller_background",
       "label": "Best seller background",
-      "default": "#1c1917"
+      "default": "#ffffff"
     },
     {
       "type": "color",
       "id": "bestseller_text",
       "label": "Best seller text",
-      "default": "#ffffff"
+      "default": "#000000"
     },
     {
       "type": "color",
       "id": "save_background",
       "label": "Discount background",
-      "default": "#ffffff"
+      "default": "#5C7962"
     },
     {
       "type": "color",
       "id": "save_text",
       "label": "Discount text",
-      "default": "#1c1917"
+      "default": "#FFFFFA"
     },
     {
       "type": "color",
@@ -330,7 +330,7 @@
       "settings": {
         "heading": "Best sellers",
         "heading_size": "large",
-        "shop_all_label": "Shop all",
+        "shop_all_label": "Shop All Best Sellers",
         "max_products": 10,
         "mobile_initial": 4,
         "best_seller_label": "Best seller",

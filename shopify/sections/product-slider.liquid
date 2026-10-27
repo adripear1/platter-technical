@@ -93,10 +93,10 @@
     --ps-text: {{ section.settings.text_color | default: 'inherit' }};
     --ps-muted: {{ section.settings.muted_color | default: '#78716c' }};
     --ps-image: {{ section.settings.image_background | default: '#e7e5e4' }};
-    --bestseller-bg: {{ section.settings.bestseller_background | default: '#1c1917' }};
-    --bestseller-text: {{ section.settings.bestseller_text | default: '#ffffff' }};
-    --save-bg: {{ section.settings.save_background | default: '#ffffff' }};
-    --save-text: {{ section.settings.save_text | default: '#1c1917' }};
+    --bestseller-bg: {{ section.settings.bestseller_background | default: '#ffffff' }};
+    --bestseller-text: {{ section.settings.bestseller_text | default: '#000000' }};
+    --save-bg: {{ section.settings.save_background | default: '#5C7962' }};
+    --save-text: {{ section.settings.save_text | default: '#FFFFFA' }};
     --star: {{ section.settings.star_color | default: 'currentColor' }};
     --star-empty: color-mix(in srgb, currentColor 22%, transparent);
     --progress: {{ section.settings.progress_color | default: 'currentColor' }};
@@ -133,9 +133,8 @@
         {%- endif -%}
         {%- if shop_link != blank and section.settings.shop_all_label != blank -%}
           <a class="ps-shop" href="{{ shop_link }}">
-            <span>{{ section.settings.shop_all_label | escape }}</span>
-            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <span>{{ section.settings.shop_all_label | escape }}</span><svg viewBox="0 0 16 12" width="16" height="12" fill="none" aria-hidden="true">
+              <path d="M0 6h15M9.5 1.2 15 6l-5.5 4.8" stroke="currentColor" stroke-width="2"></path>
             </svg>
           </a>
         {%- endif -%}
@@ -285,7 +284,7 @@
       "type": "text",
       "id": "shop_all_label",
       "label": "Shop all label",
-      "default": "Shop all"
+      "default": "Shop All Best Sellers"
     },
     {
       "type": "url",
@@ -510,25 +509,25 @@
       "type": "color",
       "id": "bestseller_background",
       "label": "Best seller background",
-      "default": "#1c1917"
+      "default": "#ffffff"
     },
     {
       "type": "color",
       "id": "bestseller_text",
       "label": "Best seller text",
-      "default": "#ffffff"
+      "default": "#000000"
     },
     {
       "type": "color",
       "id": "save_background",
       "label": "Discount background",
-      "default": "#ffffff"
+      "default": "#5C7962"
     },
     {
       "type": "color",
       "id": "save_text",
       "label": "Discount text",
-      "default": "#1c1917"
+      "default": "#FFFFFA"
     },
     {
       "type": "color",
@@ -577,7 +576,7 @@
       "settings": {
         "heading": "Best sellers",
         "heading_size": "large",
-        "shop_all_label": "Shop all",
+        "shop_all_label": "Shop All Best Sellers",
         "max_products": 10,
         "mobile_initial": 4,
         "best_seller_label": "Best seller",

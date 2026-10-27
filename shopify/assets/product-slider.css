@@ -47,6 +47,7 @@ product-slider .track {
   margin: 0;
   padding: 0;
   overflow-x: auto;
+  overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scroll-behavior: auto;
@@ -68,7 +69,13 @@ product-slider .track::-webkit-scrollbar {
 product-slider .product-card {
   flex: 0 0 min(355px, calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible)));
   width: min(355px, calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible)));
+  overflow: hidden;
   scroll-snap-align: start;
+}
+
+product-slider .product-card:focus-within {
+  outline: 2px solid var(--progress, #1c1917);
+  outline-offset: 4px;
 }
 
 product-slider .product-card img {
@@ -274,9 +281,10 @@ product-slider.ps-frame--full {
 
 product-slider .ps-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.5rem 1rem;
   margin-bottom: 1.5rem;
 }
 
@@ -289,6 +297,7 @@ product-slider .ps-header {
 product-slider .ps-heading {
   margin: 0;
   min-width: 0;
+  color: #231f20;
   font-family: "Source Serif Pro", Georgia, serif;
   font-style: normal;
   font-weight: 900;
@@ -305,23 +314,27 @@ product-slider .ps-shop {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
-  gap: 0.25rem;
-  color: inherit;
+  gap: 4px;
+  margin-left: auto;
+  color: #5c553a;
   font-size: 0.875rem;
   font-weight: 500;
   line-height: 1;
+  white-space: nowrap;
   text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-decoration-color: #5c553a;
   text-underline-offset: 4px;
 }
 
 product-slider .ps-shop:hover {
-  text-decoration-color: currentColor;
+  text-decoration-color: #5c553a;
 }
 
 product-slider .ps-shop svg {
-  width: 1rem;
-  height: 1rem;
+  display: block;
+  width: 16px;
+  height: 12px;
+  flex-shrink: 0;
 }
 
 product-slider .card-link {
@@ -375,33 +388,45 @@ product-slider .product-card:focus-within .card-media__secondary {
 
 product-slider .badge {
   position: absolute;
-  top: 0.625rem;
+  top: 8px;
   z-index: 1;
-  max-width: calc(50% - 0.75rem);
-  overflow: hidden;
-  padding: 0.25rem 0.625rem;
-  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  gap: 10px;
+  margin: 0;
+  padding: 4px 8px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 100px;
+  opacity: 1;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 10px;
-  font-weight: 600;
   line-height: 1;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
   white-space: nowrap;
-  text-overflow: ellipsis;
   pointer-events: none;
 }
 
 product-slider .badge--best {
-  left: 0.625rem;
-  background: var(--bestseller-bg, #1c1917);
-  color: var(--bestseller-text, #fff);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  left: 8px;
+  width: 61px;
+  background: var(--bestseller-bg, #ffffff);
+  color: var(--bestseller-text, #000000);
+  border-color: #000000;
 }
 
 product-slider .badge--save {
-  right: 0.625rem;
-  background: var(--save-bg, #fff);
-  color: var(--save-text, #1c1917);
-  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+  right: 27px;
+  width: 51px;
+  background: var(--save-bg, #5c7962);
+  color: var(--save-text, #fffffa);
+  border-color: #5c7962;
 }
 
 product-slider .card-body {
@@ -421,6 +446,7 @@ product-slider .card-title {
   line-height: 1;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+  color: #1c1d1d;
 }
 
 product-slider .rating {
@@ -465,6 +491,7 @@ product-slider .price {
   line-height: 1;
   letter-spacing: 0;
   text-transform: uppercase;
+  color: #1c1d1d;
 }
 
 product-slider .price__current { font-weight: 500; }
@@ -505,12 +532,5 @@ product-slider .show-more svg {
 @media (max-width: 767px) {
   product-slider .show-more {
     display: flex;
-  }
-
-  product-slider .badge {
-    max-width: calc(50% - 8px);
-    padding: 0.2rem 0.45rem;
-    font-size: 9px;
-    letter-spacing: 0.03em;
   }
 }
