@@ -1,0 +1,606 @@
+{%- comment -%}
+  Product slider. Self-contained section: its stylesheet, its script, and this markup.
+  It does not render theme product cards, carousels, or price snippets.
+
+  Desktop shows 4.75 cards and slides. Below 768px the first cards stay visible
+  and Show more drops the rest open.
+{%- endcomment -%}
+
+{{ 'product-slider.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-slider.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign collection = section.settings.collection
+  assign max_products = section.settings.max_products | default: 10
+  if max_products > 10
+    assign max_products = 10
+  endif
+  if max_products < 1
+    assign max_products = 1
+  endif
+
+  assign mobile_initial = section.settings.mobile_initial | default: 4
+  if mobile_initial > max_products
+    assign mobile_initial = max_products
+  endif
+
+  assign cards_visible = section.settings.cards_visible | default: '4.75'
+  case cards_visible
+    when '3'
+      assign gap_count = 2
+    when '3.5'
+      assign gap_count = 3
+    when '4'
+      assign gap_count = 3
+    when '4.5'
+      assign gap_count = 4
+    when '5'
+      assign gap_count = 4
+    when '5.5'
+      assign gap_count = 5
+    when '6'
+      assign gap_count = 5
+    else
+      assign gap_count = 4
+  endcase
+
+  assign heading = section.settings.heading
+  if heading == blank and collection != blank
+    assign heading = collection.title
+  endif
+
+  assign shop_link = section.settings.shop_all_link
+  if shop_link == blank and collection != blank
+    assign shop_link = collection.url
+  endif
+
+  assign show_placeholders = false
+  if collection == blank or collection.products_count == 0
+    assign show_placeholders = true
+  endif
+
+  assign product_count = max_products
+  unless show_placeholders
+    if collection.products_count < max_products
+      assign product_count = collection.products_count
+    endif
+  endunless
+
+  assign has_more = false
+  if product_count > mobile_initial
+    assign has_more = true
+  endif
+
+  assign best_seller_tag = section.settings.best_seller_tag | downcase | strip | replace: ' ', '-' | replace: '_', '-'
+  assign heading_size = section.settings.heading_size | default: 'large'
+  assign heading_id = 'ProductSliderHeading-' | append: section.id
+  assign track_id = 'ProductSliderTrack-' | append: section.id
+  assign more_id = 'ProductSliderMore-' | append: section.id
+  assign frame_class = 'ps-frame ps-frame--page'
+  if section.settings.section_width == 'full'
+    assign frame_class = 'ps-frame ps-frame--full'
+  endif
+-%}
+
+{% style %}
+  #ProductSlider-{{ section.id }} {
+    --cards-visible: {{ cards_visible }};
+    --gap-count: {{ gap_count }};
+    --gap: {{ section.settings.gap | default: 16 }}px;
+    --row-gap: 20px;
+    --card-radius: {{ section.settings.card_radius | default: 16 }}px;
+    --ps-text: {{ section.settings.text_color | default: 'inherit' }};
+    --ps-muted: {{ section.settings.muted_color | default: '#78716c' }};
+    --ps-image: {{ section.settings.image_background | default: '#e7e5e4' }};
+    --bestseller-bg: {{ section.settings.bestseller_background | default: '#1c1917' }};
+    --bestseller-text: {{ section.settings.bestseller_text | default: '#ffffff' }};
+    --save-bg: {{ section.settings.save_background | default: '#ffffff' }};
+    --save-text: {{ section.settings.save_text | default: '#1c1917' }};
+    --star: {{ section.settings.star_color | default: 'currentColor' }};
+    --star-empty: color-mix(in srgb, currentColor 22%, transparent);
+    --progress: {{ section.settings.progress_color | default: 'currentColor' }};
+    --progress-track: {{ section.settings.progress_track_color | default: '#e7e5e4' }};
+    {%- if section.settings.background_color != blank -%}
+      --ps-bg: {{ section.settings.background_color }};
+    {%- endif -%}
+    padding-block: {{ section.settings.padding_top | default: 64 }}px {{ section.settings.padding_bottom | default: 64 }}px;
+  }
+{% endstyle %}
+
+<div
+  id="ProductSlider-{{ section.id }}"
+  class="product-slider-section"
+  style="{% if section.settings.background_color != blank %}background: {{ section.settings.background_color }};{% endif %}"
+  {{ section.shopify_attributes }}
+>
+  <product-slider
+    class="{{ frame_class }}"
+    data-show-more-label="{{ section.settings.show_more_label | default: 'Show more' | escape }}"
+    data-show-less-label="{{ section.settings.show_less_label | default: 'Show less' | escape }}"
+    {% if heading != blank %}
+      aria-labelledby="{{ heading_id }}"
+    {% else %}
+      aria-label="Products"
+    {% endif %}
+  >
+    {%- if heading != blank or shop_link != blank and section.settings.shop_all_label != blank -%}
+      <div class="ps-header">
+        {%- if heading != blank -%}
+          <h2 id="{{ heading_id }}" class="ps-heading ps-heading--{{ heading_size }}">
+            {{ heading | escape }}
+          </h2>
+        {%- endif -%}
+        {%- if shop_link != blank and section.settings.shop_all_label != blank -%}
+          <a class="ps-shop" href="{{ shop_link }}">
+            <span>{{ section.settings.shop_all_label | escape }}</span>
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div id="{{ track_id }}" class="track" data-slider-track>
+      {%- if show_placeholders -%}
+        {%- for i in (1..max_products) -%}
+          {%- if forloop.index <= mobile_initial -%}
+            {% render 'product-slider-card',
+              index: forloop.index,
+              image_ratio: section.settings.image_ratio,
+              best_seller_tag: best_seller_tag,
+              best_seller_label: section.settings.best_seller_label,
+              save_label: section.settings.save_label,
+              discount_format: section.settings.discount_format
+            %}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for product in collection.products limit: max_products -%}
+          {%- if forloop.index <= mobile_initial -%}
+            {% render 'product-slider-card',
+              product: product,
+              index: forloop.index,
+              image_ratio: section.settings.image_ratio,
+              best_seller_tag: best_seller_tag,
+              best_seller_label: section.settings.best_seller_label,
+              save_label: section.settings.save_label,
+              discount_format: section.settings.discount_format
+            %}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+      {%- if has_more -%}
+        <div class="more" id="{{ more_id }}" data-more>
+          <div class="more-inner" data-more-inner>
+            {%- if show_placeholders -%}
+              {%- for i in (1..max_products) -%}
+                {%- if forloop.index > mobile_initial -%}
+                  {% render 'product-slider-card',
+                    index: forloop.index,
+                    image_ratio: section.settings.image_ratio,
+                    best_seller_tag: best_seller_tag,
+                    best_seller_label: section.settings.best_seller_label,
+                    save_label: section.settings.save_label,
+                    discount_format: section.settings.discount_format
+                  %}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- else -%}
+              {%- for product in collection.products limit: max_products -%}
+                {%- if forloop.index > mobile_initial -%}
+                  {% render 'product-slider-card',
+                    product: product,
+                    index: forloop.index,
+                    image_ratio: section.settings.image_ratio,
+                    best_seller_tag: best_seller_tag,
+                    best_seller_label: section.settings.best_seller_label,
+                    save_label: section.settings.save_label,
+                    discount_format: section.settings.discount_format
+                  %}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_progress -%}
+      <div
+        class="progress"
+        data-slider-progress
+        role="slider"
+        tabindex="0"
+        aria-label="Product list position"
+        aria-orientation="horizontal"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        aria-controls="{{ track_id }}"
+      >
+        <div class="progress__track">
+          <div class="progress__thumb" data-slider-progress-bar></div>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if has_more -%}
+      <button
+        type="button"
+        class="show-more"
+        data-show-more
+        aria-expanded="false"
+        aria-controls="{{ more_id }}"
+      >
+        <span data-show-more-label>{{ section.settings.show_more_label | default: 'Show more' | escape }}</span>
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    {%- endif -%}
+  </product-slider>
+</div>
+
+{% schema %}
+{
+  "name": "Product slider",
+  "tag": "section",
+  "class": "product-slider-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Best sellers",
+      "info": "Leave blank to use the collection title."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "text",
+      "id": "shop_all_label",
+      "label": "Shop all label",
+      "default": "Shop all"
+    },
+    {
+      "type": "url",
+      "id": "shop_all_link",
+      "label": "Shop all link",
+      "info": "Defaults to the selected collection."
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Products to show",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 10,
+      "info": "Ten products at most."
+    },
+    {
+      "type": "range",
+      "id": "mobile_initial",
+      "label": "Products before Show more",
+      "min": 2,
+      "max": 8,
+      "step": 2,
+      "default": 4,
+      "info": "Below 768px only this many cards show. Show more drops the rest open. Desktop still slides the full set."
+    },
+    {
+      "type": "header",
+      "content": "Badges"
+    },
+    {
+      "type": "text",
+      "id": "best_seller_label",
+      "label": "Best seller label",
+      "default": "Best seller",
+      "info": "Shown on the left of the image."
+    },
+    {
+      "type": "text",
+      "id": "best_seller_tag",
+      "label": "Best seller tag",
+      "default": "best-seller",
+      "info": "Products with this tag get the left badge. Matching ignores case, spaces, and hyphens."
+    },
+    {
+      "type": "text",
+      "id": "save_label",
+      "label": "Discount label",
+      "default": "Save",
+      "info": "Shown on the right of the image, followed by the discount. Example: Save 20%."
+    },
+    {
+      "type": "select",
+      "id": "discount_format",
+      "label": "Discount format",
+      "options": [
+        {
+          "value": "percent",
+          "label": "Percentage"
+        },
+        {
+          "value": "amount",
+          "label": "Amount"
+        }
+      ],
+      "default": "percent"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "cards_visible",
+      "label": "Cards visible on desktop",
+      "options": [
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "3.5",
+          "label": "3.5"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "4.5",
+          "label": "4.5"
+        },
+        {
+          "value": "4.75",
+          "label": "4.75"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "5.5",
+          "label": "5.5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        }
+      ],
+      "default": "4.75",
+      "info": "From 768px up. 4.75 shows four full cards and a peek of the next."
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Space between cards",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape"
+        }
+      ],
+      "default": "portrait"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Image corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        {
+          "value": "page",
+          "label": "Page"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ],
+      "default": "page"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_progress",
+      "label": "Show progress bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "show_more_label",
+      "label": "Show more label",
+      "default": "Show more"
+    },
+    {
+      "type": "text",
+      "id": "show_less_label",
+      "label": "Show less label",
+      "default": "Show less"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Review text"
+    },
+    {
+      "type": "color",
+      "id": "image_background",
+      "label": "Image background"
+    },
+    {
+      "type": "color",
+      "id": "bestseller_background",
+      "label": "Best seller background",
+      "default": "#1c1917"
+    },
+    {
+      "type": "color",
+      "id": "bestseller_text",
+      "label": "Best seller text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "save_background",
+      "label": "Discount background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "save_text",
+      "label": "Discount text",
+      "default": "#1c1917"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color"
+    },
+    {
+      "type": "color",
+      "id": "progress_color",
+      "label": "Progress bar"
+    },
+    {
+      "type": "color",
+      "id": "progress_track_color",
+      "label": "Progress track"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product slider",
+      "category": "Products",
+      "settings": {
+        "heading": "Best sellers",
+        "heading_size": "large",
+        "shop_all_label": "Shop all",
+        "max_products": 10,
+        "mobile_initial": 4,
+        "best_seller_label": "Best seller",
+        "best_seller_tag": "best-seller",
+        "save_label": "Save",
+        "discount_format": "percent",
+        "cards_visible": "4.75",
+        "gap": 16,
+        "image_ratio": "portrait",
+        "card_radius": 16,
+        "section_width": "page",
+        "show_progress": true,
+        "show_more_label": "Show more",
+        "show_less_label": "Show less",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  }
+}
+{% endschema %}

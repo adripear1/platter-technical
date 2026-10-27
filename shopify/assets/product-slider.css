@@ -1,0 +1,508 @@
+/*
+ * Shopify copy of the product slider.
+ * Layout rules match css/slider.css. The rules below them style the card,
+ * heading, and Show more button without Tailwind preflight, so this file
+ * can load inside a theme without restyling the rest of the store.
+ */
+
+.product-slider-section {
+  background: var(--ps-bg, transparent);
+  color: var(--ps-text, inherit);
+}
+
+product-slider,
+product-slider * {
+  box-sizing: border-box;
+}
+
+product-slider {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
+  --cards-visible: 4.75;
+  --gap-count: 4;
+  --gap: 16px;
+  --row-gap: 20px;
+  --card-radius: 1rem;
+  --star: #1c1917;
+  --star-empty: #d6d3d1;
+  --progress: #1c1917;
+  --progress-track: #e7e5e4;
+}
+
+product-slider .track,
+product-slider .more,
+product-slider .more-inner,
+product-slider .product-card {
+  min-width: 0;
+  max-width: 100%;
+}
+
+product-slider .track {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  touch-action: pan-x pan-y;
+  cursor: grab;
+  list-style: none;
+}
+
+product-slider .track::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+ * Four full cards and three quarters of the next one.
+ * The peek is a fifth card, so four gaps sit in the frame: ceil(4.75) - 1 = 4.
+ */
+product-slider .product-card {
+  flex: 0 0 calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible));
+  width: calc((100% - (var(--gap-count) * var(--gap))) / var(--cards-visible));
+  scroll-snap-align: start;
+}
+
+product-slider .product-card img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* On desktop the cards after the fourth join the same scrolling row. */
+product-slider .more,
+product-slider .more-inner {
+  display: contents;
+}
+
+product-slider.is-dragging .track {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+
+product-slider.is-dragging {
+  user-select: none;
+}
+
+product-slider .stars {
+  position: relative;
+  display: inline-block;
+  height: 14px;
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: var(--star-empty);
+  white-space: nowrap;
+}
+
+product-slider .stars__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--rating, 0%);
+  overflow: hidden;
+  color: var(--star);
+  white-space: nowrap;
+}
+
+/*
+ * Custom scrollbar under the cards.
+ * The track line stays 3px. The thumb grows from 3px to 6px on hover,
+ * keyboard focus, and touch.
+ */
+product-slider .progress {
+  margin-top: 22px;
+  padding-block: 10px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+product-slider .progress__track {
+  position: relative;
+  height: 6px;
+}
+
+product-slider .progress__track::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: 3px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: var(--progress-track);
+}
+
+product-slider .progress__thumb {
+  position: absolute;
+  top: 50%;
+  height: 3px;
+  inset-inline-start: 0;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: var(--progress);
+  transition: height 180ms ease;
+}
+
+product-slider .progress:hover .progress__thumb,
+product-slider .progress:active .progress__thumb,
+product-slider .progress.is-touching .progress__thumb,
+product-slider .progress:focus-visible .progress__thumb {
+  height: 6px;
+}
+
+product-slider .progress:focus-visible {
+  outline: 2px solid var(--progress);
+  outline-offset: 4px;
+}
+
+product-slider .show-more svg {
+  transition: transform 300ms ease;
+}
+
+product-slider .show-more[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+@media (min-width: 768px) {
+  product-slider .show-more {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  product-slider .track {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
+    row-gap: 0;
+    overflow: visible;
+    cursor: auto;
+    touch-action: auto;
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+
+  product-slider .product-card {
+    width: auto;
+    flex: none;
+    margin-bottom: var(--row-gap);
+  }
+
+  product-slider .product-card.is-last-row {
+    margin-bottom: 0;
+  }
+
+  product-slider .badge {
+    max-width: calc(50% - 8px);
+    padding-left: 0.45rem;
+    padding-right: 0.45rem;
+    font-size: 9px;
+    letter-spacing: 0.03em;
+  }
+
+  product-slider .more {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-rows: 0fr;
+    min-height: 0;
+    overflow: hidden;
+    margin-top: 0;
+    transition: grid-template-rows 500ms ease, margin-top 500ms ease;
+  }
+
+  product-slider .more.is-open {
+    grid-template-rows: 1fr;
+    margin-top: var(--row-gap);
+  }
+
+  product-slider .more-inner {
+    display: grid;
+    min-height: 0;
+    overflow: hidden;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--row-gap) 12px;
+  }
+
+  product-slider .progress {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  product-slider .track {
+    scroll-behavior: auto;
+  }
+
+  product-slider .more,
+  product-slider .progress__thumb,
+  product-slider .show-more svg,
+  product-slider .product-card img {
+    transition: none;
+  }
+}
+
+product-slider.ps-frame {
+  display: block;
+  width: min(1200px, calc(100% - 32px));
+  margin-inline: auto;
+  color: var(--ps-text, inherit);
+  font-family: var(--font-body--family, "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif);
+}
+
+product-slider.ps-frame--full {
+  width: min(100%, calc(100% - 32px));
+}
+
+@media (min-width: 768px) {
+  product-slider.ps-frame,
+  product-slider.ps-frame--full {
+    width: min(1200px, calc(100% - 64px));
+  }
+
+  product-slider.ps-frame--full {
+    width: calc(100% - 64px);
+  }
+}
+
+product-slider .ps-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  product-slider .ps-header {
+    margin-bottom: 2rem;
+  }
+}
+
+product-slider .ps-heading {
+  margin: 0;
+  min-width: 0;
+  font-family: var(--font-heading--family, "Iowan Old Style", Palatino, Georgia, serif);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+product-slider .ps-heading--small { font-size: 1.5rem; }
+product-slider .ps-heading--medium { font-size: 2rem; }
+product-slider .ps-heading--large { font-size: 1.875rem; line-height: 2.25rem; }
+
+@media (min-width: 768px) {
+  product-slider .ps-heading--large {
+    font-size: 2.75rem;
+    line-height: 1;
+  }
+}
+
+product-slider .ps-shop {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.25rem;
+  color: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-underline-offset: 4px;
+}
+
+product-slider .ps-shop:hover {
+  text-decoration-color: currentColor;
+}
+
+product-slider .ps-shop svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+product-slider .card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+product-slider .card-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+product-slider .card-media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--card-radius, 1rem);
+  background: var(--ps-image, #e7e5e4);
+}
+
+product-slider .card-media--square { aspect-ratio: 1; }
+product-slider .card-media--landscape { aspect-ratio: 5 / 4; }
+
+product-slider .card-media img,
+product-slider .card-media svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 500ms ease;
+}
+
+product-slider .card-media__secondary {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+product-slider .product-card:hover .card-media__primary,
+product-slider .product-card:focus-within .card-media__primary {
+  opacity: 0;
+}
+
+product-slider .product-card:hover .card-media__secondary,
+product-slider .product-card:focus-within .card-media__secondary {
+  opacity: 1;
+}
+
+product-slider .badge {
+  position: absolute;
+  top: 0.625rem;
+  z-index: 1;
+  max-width: calc(50% - 0.75rem);
+  overflow: hidden;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+product-slider .badge--best {
+  left: 0.625rem;
+  background: var(--bestseller-bg, #1c1917);
+  color: var(--bestseller-text, #fff);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+product-slider .badge--save {
+  right: 0.625rem;
+  background: var(--save-bg, #fff);
+  color: var(--save-text, #1c1917);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+
+product-slider .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-top: 0.75rem;
+}
+
+product-slider .card-title {
+  display: -webkit-box;
+  margin: 0;
+  min-height: 2.5rem;
+  overflow: hidden;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  letter-spacing: -0.025em;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+product-slider .rating {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--ps-muted, #78716c);
+  font-size: 0.75rem;
+}
+
+product-slider .rating__row {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0;
+}
+
+product-slider .rating__value {
+  color: var(--ps-text, inherit);
+  font-weight: 500;
+}
+
+product-slider .rating__count,
+product-slider .price {
+  margin: 0;
+}
+
+product-slider .price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+product-slider .price__current { font-weight: 500; }
+
+product-slider .price__compare {
+  color: var(--ps-muted, #a8a29e);
+  text-decoration: line-through;
+}
+
+product-slider .show-more {
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 220px;
+  margin: 2rem auto 0;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+product-slider .show-more:hover {
+  background: #1c1917;
+  color: #fff;
+}
+
+product-slider .show-more svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+@media (max-width: 767px) {
+  product-slider .show-more {
+    display: flex;
+  }
+
+  product-slider .badge {
+    max-width: calc(50% - 8px);
+    padding: 0.2rem 0.45rem;
+    font-size: 9px;
+    letter-spacing: 0.03em;
+  }
+}

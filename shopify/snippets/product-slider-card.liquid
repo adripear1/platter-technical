@@ -1,0 +1,262 @@
+{%- comment -%}
+  Card used only by the product slider section.
+  It does not render the theme product card.
+
+  Accepts:
+  product, index, image_ratio, best_seller_tag, best_seller_label,
+  save_label, discount_format
+{%- endcomment -%}
+
+{%- liquid
+  assign card_index = index | default: 1
+  assign ratio = image_ratio | default: 'portrait'
+  assign title = ''
+  assign product_url = ''
+  assign price = 0
+  assign compare_at = 0
+  assign rating = 0
+  assign rating_scale = 5
+  assign rating_count = 0
+  assign is_best_seller = false
+  assign primary_image = nil
+  assign secondary_image = nil
+  assign primary_src = ''
+  assign secondary_src = ''
+
+  if product != blank
+    assign title = product.title
+    assign product_url = product.url
+    assign variant = product.selected_or_first_available_variant
+    assign price = variant.price | default: 0
+    assign compare_at = variant.compare_at_price | default: 0
+    assign primary_image = product.featured_image
+    if primary_image == blank and product.featured_media.preview_image != blank
+      assign primary_image = product.featured_media.preview_image
+    endif
+    if product.images.size > 1
+      assign secondary_image = product.images[1]
+    endif
+
+    assign rating_drop = product.metafields.reviews.rating.value
+    if rating_drop.rating != blank
+      assign rating = rating_drop.rating
+    elsif rating_drop != blank
+      assign rating = rating_drop
+    endif
+    assign rating_scale = rating_drop.scale_max | default: 5
+    if product.metafields.reviews.rating_count.value != blank
+      assign rating_count = product.metafields.reviews.rating_count.value
+    endif
+
+    assign normalized_tag = best_seller_tag | default: ''
+    if normalized_tag != blank
+      for tag in product.tags
+        assign tag_name = tag | downcase | strip | replace: ' ', '-' | replace: '_', '-'
+        if tag_name == normalized_tag
+          assign is_best_seller = true
+          break
+        endif
+      endfor
+    endif
+  else
+    case card_index
+      when 1
+        assign title = 'Stoneware dinner plate'
+        assign price = 4800
+        assign rating = 4.8
+        assign rating_count = 126
+        assign is_best_seller = true
+        assign primary_src = 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=900&h=1125&q=80'
+        assign secondary_src = 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=900&h=1125&q=80'
+      when 2
+        assign title = 'Hand-thrown serving bowl'
+        assign price = 6400
+        assign compare_at = 8000
+        assign rating = 4.6
+        assign rating_count = 84
+        assign primary_src = 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=900&h=1125&q=80'
+        assign secondary_src = 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&h=1125&q=80'
+      when 3
+        assign title = 'Linen napkin set'
+        assign price = 3400
+        assign compare_at = 4000
+        assign rating = 4.9
+        assign rating_count = 203
+        assign primary_src = 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=900&h=1125&q=80'
+        assign secondary_src = 'https://images.unsplash.com/photo-1493770348161-369560ae357d?auto=format&fit=crop&w=900&h=1125&q=80'
+      when 4
+        assign title = 'Brass serving spoon'
+        assign price = 2800
+        assign rating = 4.7
+        assign rating_count = 57
+        assign is_best_seller = true
+        assign primary_src = 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&h=1125&q=80'
+        assign secondary_src = 'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=900&h=1125&q=80'
+      when 5
+        assign title = 'Olive wood board'
+        assign price = 7200
+        assign rating = 4.4
+        assign rating_count = 39
+        assign primary_src = 'https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&w=900&h=1125&q=80'
+        assign secondary_src = 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=900&h=1125&q=80'
+      when 6
+        assign title = 'Ceramic pourer'
+        assign price = 3600
+        assign compare_at = 4800
+        assign rating = 4.5
+        assign rating_count = 61
+        assign primary_src = 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=900&h=1125&q=80'
+        assign secondary_src = 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&h=1125&q=80'
+      when 7
+        assign title = 'Glass tumbler set'
+        assign price = 4200
+        assign rating = 4.8
+        assign rating_count = 98
+        assign primary_src = 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&h=1125&q=80'
+        assign secondary_src = 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=900&h=1125&q=80'
+      when 8
+        assign title = 'Marble salt cellar'
+        assign price = 2200
+        assign compare_at = 3000
+        assign rating = 5
+        assign rating_count = 44
+        assign is_best_seller = true
+        assign primary_src = 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=900&h=1125&q=80'
+        assign secondary_src = 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=900&h=1125&q=80'
+      when 9
+        assign title = 'Cotton table runner'
+        assign price = 5400
+        assign compare_at = 6000
+        assign rating = 4.3
+        assign rating_count = 27
+        assign primary_src = 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&h=1125&q=80'
+        assign secondary_src = 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&h=1125&q=80'
+      else
+        assign title = 'Espresso cup set'
+        assign price = 3800
+        assign rating = 4.7
+        assign rating_count = 73
+        assign primary_src = 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=900&h=1125&q=80'
+        assign secondary_src = 'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&h=1125&q=80'
+    endcase
+  endif
+
+  assign on_sale = false
+  assign discount_percent = 0
+  if compare_at > price and price >= 0
+    assign savings = compare_at | minus: price
+    assign discount_percent = savings | times: 100.0 | divided_by: compare_at | round
+    if discount_percent >= 1
+      assign on_sale = true
+    endif
+  endif
+
+  assign rating_fill = 0
+  if rating_scale > 0 and rating > 0
+    assign rating_fill = rating | times: 100.0 | divided_by: rating_scale
+  endif
+  if rating_fill > 100
+    assign rating_fill = 100
+  endif
+
+  assign rating_value = rating | round: 1
+  if rating_count == 1
+    assign review_label = '1 review'
+  else
+    assign review_label = rating_count | append: ' reviews'
+  endif
+
+  assign loading = 'lazy'
+  if card_index <= 4
+    assign loading = 'eager'
+  endif
+-%}
+
+<article class="product-card" data-slider-card>
+  {%- if product_url != blank -%}
+    <a class="card-link" href="{{ product_url }}">
+  {%- else -%}
+    <div class="card-link">
+  {%- endif -%}
+    <div class="card-media card-media--{{ ratio }}">
+      {%- if primary_image != blank -%}
+        {{
+          primary_image
+          | image_url: width: 900
+          | image_tag:
+            class: 'card-media__primary',
+            alt: title,
+            widths: '240, 360, 480, 720, 900',
+            sizes: '(min-width: 768px) 22vw, 46vw',
+            loading: loading,
+            draggable: 'false'
+        }}
+      {%- elsif primary_src != blank -%}
+        <img class="card-media__primary" src="{{ primary_src }}" alt="{{ title | escape }}" width="900" height="1125" loading="{{ loading }}" draggable="false">
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'card-media__primary' }}
+      {%- endif -%}
+
+      {%- if secondary_image != blank -%}
+        {{
+          secondary_image
+          | image_url: width: 900
+          | image_tag:
+            class: 'card-media__secondary',
+            alt: '',
+            widths: '240, 360, 480, 720, 900',
+            sizes: '(min-width: 768px) 22vw, 46vw',
+            loading: 'lazy',
+            draggable: 'false'
+        }}
+      {%- elsif secondary_src != blank -%}
+        <img class="card-media__secondary" src="{{ secondary_src }}" alt="" width="900" height="1125" loading="lazy" draggable="false">
+      {%- endif -%}
+
+      {%- if is_best_seller and best_seller_label != blank -%}
+        <span class="badge badge--best">{{ best_seller_label | escape }}</span>
+      {%- endif -%}
+
+      {%- if on_sale -%}
+        <span class="badge badge--save">
+          {%- if save_label != blank -%}{{ save_label | escape }} {% endif -%}
+          {%- if discount_format == 'amount' -%}
+            {{- savings | money -}}
+          {%- else -%}
+            {{- discount_percent -}}%
+          {%- endif -%}
+        </span>
+      {%- endif -%}
+    </div>
+
+    <div class="card-body">
+      <h3 class="card-title">{{ title | escape }}</h3>
+      <div class="rating">
+        <p class="rating__row">
+          <span class="stars" aria-hidden="true" style="--rating: {{ rating_fill }}%;">
+            <span class="stars__base">★★★★★</span>
+            <span class="stars__fill">★★★★★</span>
+          </span>
+          {%- if rating > 0 -%}
+            <span class="rating__value">{{ rating_value }}</span>
+          {%- else -%}
+            <span class="rating__value">No reviews yet</span>
+          {%- endif -%}
+        </p>
+        {%- if rating > 0 -%}
+          <p class="rating__count">{{ review_label }}</p>
+        {%- endif -%}
+      </div>
+      <p class="price">
+        <span class="price__current">{{ price | money }}</span>
+        {%- if on_sale -%}
+          <s class="price__compare">{{ compare_at | money }}</s>
+        {%- endif -%}
+      </p>
+    </div>
+  {%- if product_url != blank -%}
+    </a>
+  {%- else -%}
+    </div>
+  {%- endif -%}
+</article>
