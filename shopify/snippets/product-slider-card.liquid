@@ -159,7 +159,6 @@
     assign rating_fill = 100
   endif
 
-  assign rating_value = rating | round: 1
   if rating_count == 1
     assign review_label = '1 review'
   else
@@ -237,11 +236,6 @@
             <span class="stars__base">★★★★★</span>
             <span class="stars__fill">★★★★★</span>
           </span>
-          {%- if rating > 0 -%}
-            <span class="rating__value">{{ rating_value }}</span>
-          {%- else -%}
-            <span class="rating__value">No reviews yet</span>
-          {%- endif -%}
         </p>
         {%- if rating > 0 -%}
           <p class="rating__count">{{ review_label }}</p>

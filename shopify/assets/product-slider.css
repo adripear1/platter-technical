@@ -73,9 +73,13 @@ product-slider .product-card {
   scroll-snap-align: start;
 }
 
-product-slider .product-card:focus-within {
-  outline: 2px solid var(--progress, #1c1917);
-  outline-offset: 4px;
+product-slider .product-card a,
+product-slider .card-link,
+product-slider .product-card a:focus,
+product-slider .product-card a:focus-visible,
+product-slider .card-link:focus,
+product-slider .card-link:focus-visible {
+  outline: none;
 }
 
 product-slider .product-card img {
@@ -343,11 +347,6 @@ product-slider .card-link {
   text-decoration: none;
 }
 
-product-slider .card-link:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 4px;
-}
-
 product-slider .card-media {
   position: relative;
   width: 100%;
@@ -422,7 +421,7 @@ product-slider .badge--best {
 }
 
 product-slider .badge--save {
-  right: 27px;
+  right: 8px;
   width: 51px;
   background: var(--save-bg, #5c7962);
   color: var(--save-text, #fffffa);

@@ -62,9 +62,10 @@ product-slider .product-card {
   scroll-snap-align: start;
 }
 
-product-slider .product-card:focus-within {
-  outline: 2px solid var(--progress, #1c1917);
-  outline-offset: 4px;
+product-slider .product-card a,
+product-slider .product-card a:focus,
+product-slider .product-card a:focus-visible {
+  outline: none;
 }
 
 product-slider .product-card img {
@@ -72,10 +73,7 @@ product-slider .product-card img {
   user-select: none;
 }
 
-/*
- * Badges sit on the image. The discount badge's left edge is 277px
- * on a 355px image, which is 27px in from the right.
- */
+/* Badges sit on the image. The discount badge matches the 8px inset on the right. */
 product-slider .badge {
   position: absolute;
   top: 8px;
@@ -113,7 +111,7 @@ product-slider .badge--best {
 }
 
 product-slider .badge--save {
-  right: 27px;
+  right: 8px;
   width: 51px;
   background: var(--save-bg, #5c7962);
   color: var(--save-text, #fffffa);
