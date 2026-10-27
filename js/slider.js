@@ -320,9 +320,8 @@
       if (!this.more || !this.showMore) return;
 
       const open = !this.more.classList.contains("is-open");
-      const cssReveal = this.prefersCssReveal();
-      const startHeight = cssReveal ? 0 : this.more.getBoundingClientRect().height;
-      const startMargin = cssReveal ? "0px" : getComputedStyle(this.more).marginTop;
+      const startHeight = this.more.getBoundingClientRect().height;
+      const startMargin = getComputedStyle(this.more).marginTop;
 
       this.more.classList.toggle("is-open", open);
       this.showMore.setAttribute("aria-expanded", String(open));
@@ -335,50 +334,66 @@
         this.showMore.focus();
       }
 
-      this.syncMoreAccess();
+      if (open || this.isDesktop() || this.motionQuery.matches) this.syncMoreAccess();
       this.animateMore(open, startHeight, startMargin);
-    }
-
-    prefersCssReveal() {
-      return CSS.supports("interpolate-size", "allow-keywords") && !this.isDesktop() && !this.motionQuery.matches;
     }
 
     animateMore(open, startHeight, startMargin) {
       const panel = this.more;
-
-      if (this.prefersCssReveal()) return;
-
       const inner = panel.querySelector("[data-more-inner]");
-      panel.getAnimations().forEach((animation) => animation.cancel());
+
+      if (this.revealTimer) window.clearTimeout(this.revealTimer);
+      if (this.onMoreTransitionEnd) panel.removeEventListener("transitionend", this.onMoreTransitionEnd);
+      this.revealing = true;
 
       if (!inner || this.isDesktop() || this.motionQuery.matches) {
-        panel.style.height = "";
-        panel.style.marginTop = "";
+        this.finishReveal();
         return;
       }
 
       const gap = getComputedStyle(panel).getPropertyValue("--row-gap").trim() || "20px";
-      panel.style.height = "auto";
-      panel.style.marginTop = open ? gap : "0px";
-      const endHeight = open ? inner.getBoundingClientRect().height : 0;
       const endMargin = open ? gap : "0px";
+
+      panel.style.transition = "none";
+      if (open) {
+        panel.style.height = "auto";
+        panel.style.marginTop = endMargin;
+      }
+      const endHeight = open ? inner.scrollHeight : 0;
 
       panel.style.height = `${startHeight}px`;
       panel.style.marginTop = startMargin;
+      void panel.offsetHeight;
 
-      const animation = panel.animate(
-        [
-          { height: `${startHeight}px`, marginTop: startMargin },
-          { height: `${endHeight}px`, marginTop: endMargin },
-        ],
-        { duration: 500, easing: "cubic-bezier(0.45, 0.05, 0.2, 1)", fill: "forwards" }
-      );
+      panel.style.transition = "height 520ms cubic-bezier(0.33, 0, 0.2, 1), margin-top 520ms cubic-bezier(0.33, 0, 0.2, 1)";
+      panel.style.height = `${endHeight}px`;
+      panel.style.marginTop = endMargin;
 
-      animation.onfinish = () => {
+      this.onMoreTransitionEnd = (event) => {
+        if (event.target !== panel || event.propertyName !== "height") return;
+        this.finishReveal();
+      };
+
+      panel.addEventListener("transitionend", this.onMoreTransitionEnd);
+      this.revealTimer = window.setTimeout(() => this.finishReveal(), 700);
+    }
+
+    finishReveal() {
+      if (this.revealTimer) {
+        window.clearTimeout(this.revealTimer);
+        this.revealTimer = 0;
+      }
+
+      const panel = this.more;
+      if (panel) {
+        if (this.onMoreTransitionEnd) panel.removeEventListener("transitionend", this.onMoreTransitionEnd);
+        panel.style.transition = "";
         panel.style.height = "";
         panel.style.marginTop = "";
-        animation.cancel();
-      };
+      }
+
+      this.revealing = false;
+      this.onViewportChange();
     }
 
     syncMoreAccess() {
@@ -401,16 +416,12 @@
     }
 
     onBreakpointChange() {
-      if (this.more) {
-        this.more.getAnimations().forEach((animation) => animation.cancel());
-        this.more.style.height = "";
-        this.more.style.marginTop = "";
-      }
-
-      this.onViewportChange();
+      this.finishReveal();
     }
 
     onViewportChange() {
+      if (this.revealing) return;
+
       this.markLastRow();
       this.syncMoreAccess();
       this.updateProgress();
