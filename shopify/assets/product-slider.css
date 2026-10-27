@@ -22,7 +22,7 @@ product-slider {
   overflow-x: clip;
   --cards-visible: 4.75;
   --gap-count: 4;
-  --gap: 16px;
+  --gap: 24px;
   --row-gap: 20px;
   --card-radius: 10px;
   --star: #1c1917;
@@ -104,23 +104,18 @@ product-slider.is-dragging {
 }
 
 product-slider .stars {
-  position: relative;
+  --star-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 12'%3E%3Cpath fill='black' d='M6 .6 7.3 4.3 11.1 4.3 8 6.7 9.2 10.4 6 8.2 2.8 10.4 4 6.7.9 4.3 4.7 4.3z'/%3E%3C/svg%3E");
   display: inline-block;
-  height: 14px;
-  font-size: 13px;
-  line-height: 1;
-  letter-spacing: 1px;
-  color: var(--star-empty);
-  white-space: nowrap;
-}
-
-product-slider .stars__fill {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: var(--rating, 0%);
-  overflow: hidden;
-  color: var(--star);
-  white-space: nowrap;
+  width: 70px;
+  height: 12px;
+  vertical-align: middle;
+  background-color: var(--star, #1c1917);
+  -webkit-mask-image: var(--star-shape);
+  mask-image: var(--star-shape);
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+  -webkit-mask-size: 14px 12px;
+  mask-size: 14px 12px;
 }
 
 /*
@@ -129,7 +124,7 @@ product-slider .stars__fill {
  * keyboard focus, and touch.
  */
 product-slider .progress {
-  margin-top: 22px;
+  margin-top: 37px;
   padding-block: 10px;
   cursor: pointer;
   touch-action: none;
@@ -169,20 +164,49 @@ product-slider .progress:focus-visible .progress__thumb {
   height: 6px;
 }
 
+product-slider .progress:focus,
 product-slider .progress:focus-visible {
-  outline: 2px solid var(--progress);
-  outline-offset: 4px;
+  outline: none;
 }
 
-product-slider .show-more svg {
-  transition: transform 300ms ease;
-}
-
-product-slider .show-more[aria-expanded="true"] svg {
-  transform: rotate(180deg);
+product-slider .show-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  height: 54px;
+  gap: 8px;
+  margin: 24px 0 0;
+  padding: 16px 24px;
+  border: 0;
+  border-radius: 100px;
+  opacity: 1;
+  background: #1c1d1d;
+  color: #fffffa;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+  text-align: center;
+  cursor: pointer;
 }
 
 @media (min-width: 768px) {
+  product-slider {
+    overflow-x: visible;
+  }
+
+  /* The row runs to the right edge of the screen, so the 4.75 card is cut off there.
+     Left padding is 32px larger than the right, so subtract half that difference. */
+  product-slider .track {
+    width: calc(50% + 50vw - 16px);
+    max-width: none;
+  }
+
   product-slider .show-more {
     display: none;
   }
@@ -192,7 +216,7 @@ product-slider .show-more[aria-expanded="true"] svg {
   product-slider .track {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 12px;
+    column-gap: 24px;
     row-gap: 0;
     overflow: visible;
     cursor: auto;
@@ -222,24 +246,26 @@ product-slider .show-more[aria-expanded="true"] svg {
   product-slider .more {
     display: grid;
     grid-column: 1 / -1;
-    grid-template-rows: 0fr;
+    height: 0;
     min-height: 0;
     overflow: hidden;
     margin-top: 0;
-    transition: grid-template-rows 500ms ease, margin-top 500ms ease;
+    interpolate-size: allow-keywords;
+    transition:
+      height 500ms cubic-bezier(0.45, 0.05, 0.2, 1),
+      margin-top 500ms cubic-bezier(0.45, 0.05, 0.2, 1);
   }
 
   product-slider .more.is-open {
-    grid-template-rows: 1fr;
+    height: auto;
     margin-top: var(--row-gap);
   }
 
   product-slider .more-inner {
     display: grid;
     min-height: 0;
-    overflow: hidden;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--row-gap) 12px;
+    gap: var(--row-gap) 24px;
   }
 
   product-slider .progress {
@@ -254,7 +280,6 @@ product-slider .show-more[aria-expanded="true"] svg {
 
   product-slider .more,
   product-slider .progress__thumb,
-  product-slider .show-more svg,
   product-slider .product-card img {
     transition: none;
   }
@@ -262,6 +287,7 @@ product-slider .show-more[aria-expanded="true"] svg {
 
 product-slider.ps-frame {
   display: block;
+  box-sizing: border-box;
   width: min(1814px, calc(100% - 32px));
   margin-inline: auto;
   color: var(--ps-text, inherit);
@@ -276,6 +302,7 @@ product-slider.ps-frame--full {
   product-slider.ps-frame,
   product-slider.ps-frame--full {
     width: min(1814px, calc(100% - 64px));
+    padding-left: 32px;
   }
 
   product-slider.ps-frame--full {
@@ -411,8 +438,7 @@ product-slider .badge {
   gap: 10px;
   margin: 0;
   padding: 4px 8px;
-  border-style: solid;
-  border-width: 1px;
+  border: 1px solid #000000;
   border-radius: 100px;
   opacity: 1;
   font-family: "Bebas Neue", Impact, sans-serif;
@@ -432,7 +458,6 @@ product-slider .badge--best {
   width: 61px;
   background: var(--bestseller-bg, #ffffff);
   color: var(--bestseller-text, #000000);
-  border-color: #000000;
 }
 
 product-slider .badge--save {
@@ -440,14 +465,15 @@ product-slider .badge--save {
   width: 51px;
   background: var(--save-bg, #5c7962);
   color: var(--save-text, #fffffa);
-  border-color: #5c7962;
 }
 
 product-slider .card-body {
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
-  margin-top: 0.75rem;
+  gap: 8px;
+  margin-top: 0;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 product-slider .card-title {
@@ -515,35 +541,20 @@ product-slider .price__compare {
   text-decoration: line-through;
 }
 
-product-slider .show-more {
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  max-width: 220px;
-  margin: 2rem auto 0;
-  padding: 0.75rem 1.25rem;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-product-slider .show-more:hover {
-  background: #1c1917;
-  color: #fff;
-}
-
-product-slider .show-more svg {
-  width: 1rem;
-  height: 1rem;
-}
-
 @media (max-width: 767px) {
+  product-slider .card-title {
+    font-size: 16px;
+  }
+
+  product-slider .rating__count {
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
   product-slider .show-more {
     display: flex;
   }

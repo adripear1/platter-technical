@@ -69,11 +69,12 @@
       if (this.progress) {
         this.progress.addEventListener("pointerdown", (event) => this.onProgressDown(event), { signal });
         this.progress.addEventListener("pointermove", (event) => this.onProgressMove(event), { signal });
-        this.progress.addEventListener("pointerup", () => this.onProgressUp(), { signal });
-        this.progress.addEventListener("pointercancel", () => this.onProgressUp(), { signal });
+        this.progress.addEventListener("pointerup", (event) => this.onProgressUp(event), { signal });
+        this.progress.addEventListener("pointercancel", (event) => this.onProgressUp(event), { signal });
         this.progress.addEventListener("pointerenter", () => this.setThumbHot(true), { signal });
-        this.progress.addEventListener("pointerleave", () => {
-          if (!this.seeking) this.setThumbHot(false);
+        this.progress.addEventListener("pointerleave", (event) => {
+          if (this.seeking || this.pointerOverProgress(event)) return;
+          this.setThumbHot(false);
         }, { signal });
         this.progress.addEventListener("keydown", (event) => this.onKey(event), { signal });
       }
@@ -82,7 +83,7 @@
         this.showMore.addEventListener("click", () => this.toggleMore(), { signal });
       }
 
-      this.desktopQuery.addEventListener("change", () => this.onViewportChange(), { signal });
+      this.desktopQuery.addEventListener("change", () => this.onBreakpointChange(), { signal });
       this.observer = new ResizeObserver(() => this.onViewportChange());
       this.observer.observe(this.track);
 
@@ -270,6 +271,13 @@
       return clamp(ratio, 0, 1);
     }
 
+    pointerOverProgress(event) {
+      if (!this.progress || !event) return false;
+
+      const rect = this.progress.getBoundingClientRect();
+      return event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
+    }
+
     setThumbHot(hot) {
       this.progress.classList.toggle("is-touching", hot);
     }
@@ -295,21 +303,27 @@
       this.track.scrollLeft = this.nativeScrollLeft(this.ratioFromEvent(event) * this.maxScroll());
     }
 
-    onProgressUp() {
+    onProgressUp(event) {
       if (!this.seeking) return;
 
       this.seeking = false;
       this.classList.remove("is-dragging");
 
-      if (!this.progress.matches(":hover")) {
-        this.setThumbHot(false);
+      if (event && event.pointerId != null && this.progress.hasPointerCapture(event.pointerId)) {
+        this.progress.releasePointerCapture(event.pointerId);
       }
+
+      this.setThumbHot(this.pointerOverProgress(event) || this.progress.matches(":hover"));
     }
 
     toggleMore() {
       if (!this.more || !this.showMore) return;
 
       const open = !this.more.classList.contains("is-open");
+      const cssReveal = this.prefersCssReveal();
+      const startHeight = cssReveal ? 0 : this.more.getBoundingClientRect().height;
+      const startMargin = cssReveal ? "0px" : getComputedStyle(this.more).marginTop;
+
       this.more.classList.toggle("is-open", open);
       this.showMore.setAttribute("aria-expanded", String(open));
 
@@ -322,6 +336,49 @@
       }
 
       this.syncMoreAccess();
+      this.animateMore(open, startHeight, startMargin);
+    }
+
+    prefersCssReveal() {
+      return CSS.supports("interpolate-size", "allow-keywords") && !this.isDesktop() && !this.motionQuery.matches;
+    }
+
+    animateMore(open, startHeight, startMargin) {
+      const panel = this.more;
+
+      if (this.prefersCssReveal()) return;
+
+      const inner = panel.querySelector("[data-more-inner]");
+      panel.getAnimations().forEach((animation) => animation.cancel());
+
+      if (!inner || this.isDesktop() || this.motionQuery.matches) {
+        panel.style.height = "";
+        panel.style.marginTop = "";
+        return;
+      }
+
+      const gap = getComputedStyle(panel).getPropertyValue("--row-gap").trim() || "20px";
+      panel.style.height = "auto";
+      panel.style.marginTop = open ? gap : "0px";
+      const endHeight = open ? inner.getBoundingClientRect().height : 0;
+      const endMargin = open ? gap : "0px";
+
+      panel.style.height = `${startHeight}px`;
+      panel.style.marginTop = startMargin;
+
+      const animation = panel.animate(
+        [
+          { height: `${startHeight}px`, marginTop: startMargin },
+          { height: `${endHeight}px`, marginTop: endMargin },
+        ],
+        { duration: 500, easing: "cubic-bezier(0.45, 0.05, 0.2, 1)", fill: "forwards" }
+      );
+
+      animation.onfinish = () => {
+        panel.style.height = "";
+        panel.style.marginTop = "";
+        animation.cancel();
+      };
     }
 
     syncMoreAccess() {
@@ -341,6 +398,16 @@
       cards.forEach((card, index) => {
         card.classList.toggle("is-last-row", cards.length - index <= 2);
       });
+    }
+
+    onBreakpointChange() {
+      if (this.more) {
+        this.more.getAnimations().forEach((animation) => animation.cancel());
+        this.more.style.height = "";
+        this.more.style.marginTop = "";
+      }
+
+      this.onViewportChange();
     }
 
     onViewportChange() {

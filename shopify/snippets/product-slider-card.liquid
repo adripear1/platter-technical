@@ -232,14 +232,11 @@
       <h3 class="card-title">{{ title | escape }}</h3>
       <div class="rating">
         <p class="rating__row">
-          <span class="stars" aria-hidden="true" style="--rating: {{ rating_fill }}%;">
-            <span class="stars__base">★★★★★</span>
-            <span class="stars__fill">★★★★★</span>
-          </span>
+          <span class="stars" aria-hidden="true"></span>
+          {%- if rating_count > 0 -%}
+            <span class="rating__count">{{ review_label }}</span>
+          {%- endif -%}
         </p>
-        {%- if rating > 0 -%}
-          <p class="rating__count">{{ review_label }}</p>
-        {%- endif -%}
       </div>
       <p class="price">
         <span class="price__current">{{ price | money }}</span>

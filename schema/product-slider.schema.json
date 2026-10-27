@@ -169,7 +169,7 @@
       "max": 40,
       "step": 4,
       "unit": "px",
-      "default": 16
+      "default": 24
     },
     {
       "type": "select",
@@ -338,7 +338,7 @@
         "save_label": "Save",
         "discount_format": "percent",
         "cards_visible": "4.75",
-        "gap": 16,
+        "gap": 24,
         "image_ratio": "square",
         "card_radius": 10,
         "section_width": "page",

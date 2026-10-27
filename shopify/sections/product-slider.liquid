@@ -7,7 +7,7 @@
 {%- endcomment -%}
 
 {{ 'product-slider.css' | asset_url | stylesheet_tag }}
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500&family=Source+Serif+Pro:wght@900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600&family=Source+Serif+Pro:wght@900&display=swap">
 <script src="{{ 'product-slider.js' | asset_url }}" defer></script>
 
 {%- liquid
@@ -87,7 +87,7 @@
   #ProductSlider-{{ section.id }} {
     --cards-visible: {{ cards_visible }};
     --gap-count: {{ gap_count }};
-    --gap: {{ section.settings.gap | default: 16 }}px;
+    --gap: {{ section.settings.gap | default: 24 }}px;
     --row-gap: 20px;
     --card-radius: {{ section.settings.card_radius | default: 10 }}px;
     --ps-text: {{ section.settings.text_color | default: 'inherit' }};
@@ -235,9 +235,6 @@
         aria-controls="{{ more_id }}"
       >
         <span data-show-more-label>{{ section.settings.show_more_label | default: 'Show more' | escape }}</span>
-        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-        </svg>
       </button>
     {%- endif -%}
   </product-slider>
@@ -415,7 +412,7 @@
       "max": 40,
       "step": 4,
       "unit": "px",
-      "default": 16
+      "default": 24
     },
     {
       "type": "select",
@@ -584,7 +581,7 @@
         "save_label": "Save",
         "discount_format": "percent",
         "cards_visible": "4.75",
-        "gap": 16,
+        "gap": 24,
         "image_ratio": "square",
         "card_radius": 10,
         "section_width": "page",
